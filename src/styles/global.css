@@ -1,0 +1,67 @@
+:root {
+  --color-primary: #f2b137;
+  --color-primary-light: #ffc860;
+  --color-secondary: #31c3bd;
+  --color-secondary-light: #65e9e4;
+  --color-grey-400: #1a2a33;
+  --color-grey-300: #1f3641;
+  --color-grey-200: #a8bfc9;
+  --color-grey-100: #dbe8ed;
+  --color-font-weight-bold: 600;
+  --color-font-weight-medium: 500;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  background-color: var(--color-grey-400);
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+#root {
+  isolation: isolate;
+}
