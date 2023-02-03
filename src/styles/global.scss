@@ -1,3 +1,12 @@
+$primary: #f2b137;
+$primary-light: #ffc860;
+$secondary: #31c3bd;
+$secondary-light: #65e9e4;
+$grey-400: #1a2a33;
+$grey-300: #1f3641;
+$grey-200: #a8bfc9;
+$grey-100: #dbe8ed;
+
 *,
 *::before,
 *::after {
@@ -5,8 +14,7 @@
 }
 
 * {
-  // TODO: Update to correct fonts
-  font-family: "Montserrat", "Roboto", sans-serif;
+  font-family: "Outfit", sans-serif;
   margin: 0;
 }
 
@@ -16,7 +24,7 @@ body {
 }
 
 html {
-  background-color: #f8f8f8;
+  background-color: $grey-400;
 }
 
 body {
