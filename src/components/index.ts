@@ -1,3 +1,4 @@
 export * from './Logo/Logo';
-export * from './PlayerSelect/PlayerSelect';
+export * from './MarkButton/MarkButton';
+export * from './PlayerMarkSelect/PlayerMarkSelect';
 export * from './Typography';

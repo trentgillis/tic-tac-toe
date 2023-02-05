@@ -1,0 +1,14 @@
+.mark-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--color-dark-navy);
+}
+
+.img-wrapper {
+  width: 32px;
+  height: 32px;
+}
