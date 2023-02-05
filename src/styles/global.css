@@ -1,14 +1,14 @@
 :root {
-  --color-primary: #f2b137;
-  --color-primary-light: #ffc860;
-  --color-secondary: #31c3bd;
-  --color-secondary-light: #65e9e4;
-  --color-grey-400: #1a2a33;
-  --color-grey-300: #1f3641;
-  --color-grey-200: #a8bfc9;
-  --color-grey-100: #dbe8ed;
-  --color-font-weight-bold: 600;
-  --color-font-weight-medium: 500;
+  --color-yellow: #f2b137;
+  --color-yellow-hover: #ffc860;
+  --color-blue: #31c3bd;
+  --color-blue-hover: #65e9e4;
+  --color-silver: #a8bfc9;
+  --color-silver-hover: #dbe8ed;
+  --color-dark-navy: #1a2a33;
+  --color-semi-dark-navy: #1f3641;
+  --font-weight-bold: 600;
+  --font-weight-medium: 500;
 }
 
 *,
@@ -28,7 +28,7 @@ body {
 }
 
 html {
-  background-color: var(--color-grey-400);
+  background-color: var(--color-dark-navy);
 }
 
 body {

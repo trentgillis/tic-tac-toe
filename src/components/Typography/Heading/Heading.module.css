@@ -1,0 +1,25 @@
+.heading-xs {
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.heading-s {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1.25px;
+  text-transform: uppercase;
+}
+.heading-m {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.heading-l {
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+}
