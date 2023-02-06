@@ -1,10 +1,10 @@
 import styles from './Heading.module.css';
 
-import { ValidColors } from '@/lib/types/ValidColors';
+import { ValidTextColors } from '@/lib/types/ValidColors';
 
 type HeadingProps = {
   size: 'xs' | 'sm' | 'md' | 'lg';
-  color: ValidColors;
+  color: ValidTextColors;
   children: React.ReactNode;
 };
 

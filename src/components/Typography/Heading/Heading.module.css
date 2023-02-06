@@ -5,19 +5,19 @@
   text-transform: uppercase;
 }
 
-.heading-s {
+.heading-sm {
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 1.25px;
   text-transform: uppercase;
 }
-.heading-m {
+.heading-md {
   font-size: 24px;
   font-weight: bold;
   letter-spacing: 1.5px;
   text-transform: uppercase;
 }
-.heading-l {
+.heading-lg {
   font-size: 40px;
   font-weight: bold;
   letter-spacing: 2.5px;
