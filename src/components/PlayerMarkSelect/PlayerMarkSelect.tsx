@@ -13,8 +13,8 @@ export function PlayerMarkSelect() {
         pick player 1&apos;s mark
       </Heading>
       <div className={styles['mark-buttons-wrapper']}>
-        <MarkButton imgUrlDark={iconXDark} imgUrlLight={iconXLight} value="x" />
-        <MarkButton imgUrlDark={iconODark} imgUrlLight={iconOLight} value="o" />
+        <MarkButton imgUrlDark={iconXDark} imgUrlLight={iconXLight} mark="x" />
+        <MarkButton imgUrlDark={iconODark} imgUrlLight={iconOLight} mark="o" />
       </div>
       <BodyText color="silver">remember&#58; x goes first</BodyText>
     </section>

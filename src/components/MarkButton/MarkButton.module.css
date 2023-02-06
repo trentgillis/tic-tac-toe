@@ -1,14 +1,30 @@
-.mark-button {
+.mark-btn {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100%;
   border: none;
   border-radius: 10px;
   background-color: var(--color-dark-navy);
+  transition: background-color 0.3s ease;
 }
 
-.img-wrapper {
+.mark-btn:hover {
+  cursor: pointer;
+  background-color: var(--color-semi-dark-navy);
+}
+
+.mark-btn-selected {
+  background-color: var(--color-silver);
+}
+
+.mark-btn-selected:hover {
+  cursor: default;
+  background-color: var(--color-silver);
+}
+
+.mark-icon-wrapper {
   width: 32px;
   height: 32px;
 }
