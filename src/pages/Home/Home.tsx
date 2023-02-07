@@ -1,8 +1,8 @@
 import styles from './Home.module.css';
+import { useState } from 'react';
 
 import { Button, Logo, PlayerMarkSelect } from '@/components';
 import { useGameData } from '@/lib/hooks/useGameData';
-import { useState } from 'react';
 
 export function Home() {
   const [playerOneToken, setPlayerOneToken] = useState<'x' | 'o'>('x');
