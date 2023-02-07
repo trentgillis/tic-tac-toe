@@ -1,4 +1,13 @@
+import { ValidTokens } from '@/lib/types/ValidTokens';
+
+export type Player = {
+  type: 'player' | 'cpu';
+  token: ValidTokens;
+};
+
 export type GameData = {
-  playerOne: string;
-  playerTwo: string;
+  gameStarted: boolean;
+  playerX: Player | null;
+  playerO: Player | null;
+  board: [ValidTokens | null, ValidTokens | null, ValidTokens | null][] | null;
 };

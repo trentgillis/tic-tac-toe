@@ -6,8 +6,10 @@ import { GameDataProvider } from '@/lib/context/gameDataContext';
 import { GameData } from '@/lib/types/GameData';
 
 const initialGameData: GameData = {
-  playerOne: 'x',
-  playerTwo: 'o',
+  gameStarted: false,
+  playerX: null,
+  playerO: null,
+  board: null,
 };
 
 export function App() {
@@ -16,7 +18,7 @@ export function App() {
   return (
     <main className={styles['layout']}>
       <GameDataProvider value={{ gameData, setGameData }}>
-        <Home />
+        {gameData.gameStarted ? <h1>{gameData.playerX?.type}</h1> : <Home />}
       </GameDataProvider>
     </main>
   );

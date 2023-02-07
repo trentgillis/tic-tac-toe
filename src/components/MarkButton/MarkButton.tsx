@@ -1,23 +1,29 @@
 import styles from './MarkButton.module.css';
 
-import { useGameData } from '@/lib/hooks/useGameData';
+import { ValidTokens } from '@/lib/types/ValidTokens';
 
 type MarkButtonProps = {
   imgUrlLight: string;
   imgUrlDark: string;
-  mark: 'x' | 'o';
+  mark: ValidTokens;
+  playerOneToken: ValidTokens;
+  setPlayerOneToken: Function;
 };
 
-export function MarkButton({ imgUrlLight, imgUrlDark, mark }: MarkButtonProps) {
-  const { gameData, setGameData } = useGameData();
-
-  const selected = gameData?.playerOne === mark;
+export function MarkButton({
+  imgUrlLight,
+  imgUrlDark,
+  mark,
+  playerOneToken,
+  setPlayerOneToken,
+}: MarkButtonProps) {
+  const selected = playerOneToken === mark;
 
   return (
     <button
       type="button"
       className={`${styles['mark-btn']} ${selected ? styles['mark-btn-selected'] : ''}`}
-      onClick={() => setGameData({ ...gameData, playerOne: mark })}
+      onClick={() => setPlayerOneToken(mark)}
     >
       <div className={styles['mark-icon-wrapper']}>
         <img src={selected ? imgUrlDark : imgUrlLight} alt={`mark icon ${mark}`} />

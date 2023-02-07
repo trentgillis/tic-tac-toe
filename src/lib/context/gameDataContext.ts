@@ -4,7 +4,7 @@ import { GameData } from '@/lib/types/GameData';
 
 type GameDataContext = {
   gameData: GameData | null;
-  setGameData: Function;
+  setGameData: React.Dispatch<React.SetStateAction<GameData>>;
 };
 
 export const gameDataContext = createContext<GameDataContext>({
