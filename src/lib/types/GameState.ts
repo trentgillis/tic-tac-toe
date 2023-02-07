@@ -5,9 +5,9 @@ export type Player = {
   token: ValidTokens;
 };
 
-export type GameData = {
+export type GameState = {
   gameStarted: boolean;
-  playerTurn: ValidTokens;
+  currentPlayer: ValidTokens;
   playerX: Player | null;
   playerO: Player | null;
   board: [ValidTokens | null, ValidTokens | null, ValidTokens | null][] | null;

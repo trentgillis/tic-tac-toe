@@ -1,15 +1,15 @@
 import styles from './GameBoard.module.css';
 
 import { GameBoardCell } from '@/components';
-import { useGameData } from '@/lib/hooks/useGameData';
+import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 export function GameBoard() {
-  const { gameData } = useGameData();
+  const gameEngine = useGameEngine();
 
   const renderCells = (): React.ReactNode[] => {
     const cells: React.ReactNode[] = [];
 
-    gameData?.board?.map((boardRow, rowNumber) => {
+    gameEngine?.gameState?.board?.map((boardRow, rowNumber) => {
       cells.push(
         ...boardRow.map((_, colNumber) => {
           return <GameBoardCell key={`${rowNumber}${colNumber}`} row={rowNumber} col={colNumber} />;

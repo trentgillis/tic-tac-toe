@@ -2,28 +2,17 @@ import styles from './Home.module.css';
 import { useState } from 'react';
 
 import { Button, Logo, PlayerMarkSelect } from '@/components';
-import { useGameData } from '@/lib/hooks/useGameData';
+import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 export function Home() {
   const [playerOneToken, setPlayerOneToken] = useState<'x' | 'o'>('x');
-  const { setGameData } = useGameData();
+  const gameEngine = useGameEngine();
 
   const startGame = (type: 'player' | 'cpu') => {
-    setGameData({
-      gameStarted: true,
-      playerTurn: 'x',
-      playerX: {
-        token: 'x',
-        type: playerOneToken === 'x' ? 'player' : type,
-      },
-      playerO: {
-        token: 'o',
-        type: playerOneToken === 'o' ? 'player' : type,
-      },
-      board: Array(3)
-        .fill(null)
-        .map(() => [null, null, null]),
-    });
+    const playerXType = playerOneToken === 'x' ? 'player' : type;
+    const playerOType = playerOneToken === 'o' ? 'player' : type;
+
+    gameEngine?.startGame(playerXType, playerOType);
   };
 
   return (

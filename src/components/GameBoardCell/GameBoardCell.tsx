@@ -3,7 +3,7 @@ import styles from './GameBoardCell.module.css';
 import xMarkImg from '@/assets/icon-x-outline.svg';
 import oMarkImg from '@/assets/icon-o-outline.svg';
 
-import { useGameData } from '@/lib/hooks/useGameData';
+import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 type GameBoardCellProps = {
   row: number;
@@ -11,18 +11,18 @@ type GameBoardCellProps = {
 };
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
-  const { gameData } = useGameData();
+  const gameEngine = useGameEngine();
 
   const populated = false;
 
   return (
     <div
       className={`${styles['game-board-cell']} 
-        ${styles[`current-player-${gameData?.playerTurn}`]}
+        ${styles[`current-player-${gameEngine?.currentPlayer}`]}
         ${populated ? styles['populated'] : ''}`}
     >
       <div className={styles['mark-icon']}>
-        {populated && <img src={gameData?.playerTurn === 'x' ? xMarkImg : oMarkImg} />}
+        {populated && <img src={gameEngine?.currentPlayer === 'x' ? xMarkImg : oMarkImg} />}
       </div>
     </div>
   );
