@@ -7,6 +7,7 @@ import { GameData } from '@/lib/types/GameData';
 
 const initialGameData: GameData = {
   gameStarted: false,
+  playerTurn: 'x',
   playerX: null,
   playerO: null,
   board: null,

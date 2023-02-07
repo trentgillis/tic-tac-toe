@@ -4,4 +4,29 @@
   background-color: var(--color-semi-dark-navy);
   box-shadow: inset 0px -8px 0px #10212a;
   border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-board-cell:hover:not(.populated) {
+  cursor: pointer;
+}
+
+.mark-icon {
+  width: 64px;
+  height: 64px;
+  background-size: cover;
+}
+
+.current-player-x:hover:not(.populated) > .mark-icon {
+  background: url('/src/assets/icon-x-outline.svg');
+}
+
+.current-player-y:hover:not(.populated) > .mark-icon {
+  background: url('/src/assets/icon-y-outline.svg');
+}
+
+.populated {
+  cursor: default;
 }

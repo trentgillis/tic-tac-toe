@@ -7,6 +7,7 @@ export type Player = {
 
 export type GameData = {
   gameStarted: boolean;
+  playerTurn: ValidTokens;
   playerX: Player | null;
   playerO: Player | null;
   board: [ValidTokens | null, ValidTokens | null, ValidTokens | null][] | null;

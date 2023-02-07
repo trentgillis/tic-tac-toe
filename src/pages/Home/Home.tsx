@@ -11,6 +11,7 @@ export function Home() {
   const startGame = (type: 'player' | 'cpu') => {
     setGameData({
       gameStarted: true,
+      playerTurn: 'x',
       playerX: {
         token: 'x',
         type: playerOneToken === 'x' ? 'player' : type,
