@@ -14,7 +14,7 @@ export function App() {
   const [gameData, setGameData] = useState(initialGameData);
 
   return (
-    <main className={styles.layout}>
+    <main className={styles['layout']}>
       <GameDataProvider value={{ gameData, setGameData }}>
         <Home />
       </GameDataProvider>

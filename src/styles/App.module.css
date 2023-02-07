@@ -1,4 +1,20 @@
 .layout {
+  width: 100%;
   padding: 24px;
   height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'game';
+}
+
+.layout > * {
+  grid-area: game;
+}
+
+@media only screen and (min-width: 768px) {
+  .layout {
+    padding: 0;
+    grid-template-columns: 1fr 460px 1fr;
+    grid-template-areas: '. game .';
+  }
 }
