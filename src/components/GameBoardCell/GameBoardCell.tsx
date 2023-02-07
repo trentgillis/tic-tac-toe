@@ -1,9 +1,11 @@
 import styles from './GameBoardCell.module.css';
 
-import xMarkImg from '@/assets/icon-x-outline.svg';
-import oMarkImg from '@/assets/icon-o-outline.svg';
+import xMarkImg from '@/assets/icon-x.svg';
+import oMarkImg from '@/assets/icon-o.svg';
 
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
+import { useState } from 'react';
+import { ValidTokens } from '@/lib/types/ValidTokens';
 
 type GameBoardCellProps = {
   row: number;
@@ -11,18 +13,25 @@ type GameBoardCellProps = {
 };
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
+  const [mark, setMark] = useState<ValidTokens | undefined>(undefined);
   const gameEngine = useGameEngine();
 
-  const populated = false;
+  const handleCellClick = () => {
+    if (mark) return;
+
+    gameEngine?.playerTurn(row, col);
+    setMark(gameEngine?.currentPlayer);
+  };
 
   return (
     <div
       className={`${styles['game-board-cell']} 
         ${styles[`current-player-${gameEngine?.currentPlayer}`]}
-        ${populated ? styles['populated'] : ''}`}
+        ${mark ? styles['populated'] : ''}`}
+      onClick={() => handleCellClick()}
     >
       <div className={styles['mark-icon']}>
-        {populated && <img src={gameEngine?.currentPlayer === 'x' ? xMarkImg : oMarkImg} />}
+        {mark && <img src={mark === 'x' ? xMarkImg : oMarkImg} />}
       </div>
     </div>
   );

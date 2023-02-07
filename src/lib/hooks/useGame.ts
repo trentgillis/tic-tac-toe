@@ -8,7 +8,9 @@ const initialGameState: GameState = {
   currentPlayer: 'x',
   playerX: null,
   playerO: null,
-  board: null,
+  board: Array(3)
+    .fill(null)
+    .map(() => [null, null, null]),
 };
 
 export function useGame() {

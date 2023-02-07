@@ -15,12 +15,21 @@ export class GameEngine {
     return this.gameState.currentPlayer;
   }
 
+  get currentPlayerType() {
+    if (this.currentPlayer === 'x') {
+      return this.gameState.playerX?.type;
+    } else {
+      return this.gameState.playerO?.type;
+    }
+  }
+
   get gameStarted() {
     return this.gameState.gameStarted;
   }
 
   startGame(playerXType: PlayerTypes, playerOType: PlayerTypes) {
     this.setGameState({
+      ...this.gameState,
       gameStarted: true,
       currentPlayer: 'x',
       playerX: {
@@ -31,9 +40,17 @@ export class GameEngine {
         token: 'o',
         type: playerOType,
       },
-      board: Array(3)
-        .fill(null)
-        .map(() => [null, null, null]),
+    });
+  }
+
+  playerTurn(row: number, col: number) {
+    const updatedBoard = this.gameState.board;
+    this.gameState.board[row][col] = this.currentPlayer;
+
+    this.setGameState({
+      ...this.gameState,
+      currentPlayer: this.currentPlayer === 'x' ? 'o' : 'x',
+      board: updatedBoard,
     });
   }
 }

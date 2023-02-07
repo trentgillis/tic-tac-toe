@@ -1,8 +1,8 @@
 import styles from './styles/App.module.css';
 
 import { Home, Game } from '@/pages';
+import { GameEngineProvider } from '@/lib/context/gameEngineContext';
 import { useGame } from '@/lib/hooks/useGame';
-import { GameEngineProvider } from './lib/context/gameEngineContext';
 
 export function App() {
   const { gameEngine } = useGame();

@@ -10,5 +10,5 @@ export type GameState = {
   currentPlayer: ValidTokens;
   playerX: Player | null;
   playerO: Player | null;
-  board: [ValidTokens | null, ValidTokens | null, ValidTokens | null][] | null;
+  board: [ValidTokens | null, ValidTokens | null, ValidTokens | null][];
 };
