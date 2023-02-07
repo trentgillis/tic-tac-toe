@@ -1,7 +1,7 @@
 import styles from './styles/App.module.css';
 import { useState } from 'react';
 
-import { Home } from '@/pages';
+import { Home, Game } from '@/pages';
 import { GameDataProvider } from '@/lib/context/gameDataContext';
 import { GameData } from '@/lib/types/GameData';
 
@@ -18,7 +18,7 @@ export function App() {
   return (
     <main className={styles['layout']}>
       <GameDataProvider value={{ gameData, setGameData }}>
-        {gameData.gameStarted ? <h1>{gameData.playerX?.type}</h1> : <Home />}
+        {gameData.gameStarted ? <Game /> : <Home />}
       </GameDataProvider>
     </main>
   );
