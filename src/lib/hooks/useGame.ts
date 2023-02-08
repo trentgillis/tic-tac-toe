@@ -3,7 +3,7 @@ import { useRef, useState } from 'react';
 import { GameState } from '@/lib/types/GameState';
 import { GameEngine } from '@/lib/utils/GameEngine';
 
-const initialGameState: GameState = {
+export const initialGameState: GameState = {
   gameStarted: false,
   currentPlayer: 'x',
   playerX: null,

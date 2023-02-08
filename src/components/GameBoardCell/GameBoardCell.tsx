@@ -13,8 +13,10 @@ type GameBoardCellProps = {
 };
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
-  const [mark, setMark] = useState<ValidTokens | undefined>(undefined);
   const gameEngine = useGameEngine();
+  const [mark, setMark] = useState<ValidTokens | undefined | null>(
+    gameEngine?.gameState.board[row][col]
+  );
 
   const handleCellClick = () => {
     if (mark) return;
