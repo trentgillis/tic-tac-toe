@@ -1,7 +1,7 @@
 .layout {
   width: 100%;
-  padding: 24px;
   height: 100%;
+  padding: 24px;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas: 'game';
@@ -16,5 +16,7 @@
     padding: 0;
     grid-template-columns: 1fr 460px 1fr;
     grid-template-areas: '. game .';
+    align-items: center;
+    justify-items: center;
   }
 }
