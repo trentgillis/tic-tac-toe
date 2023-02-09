@@ -4,7 +4,7 @@ import xMarkImg from '@/assets/icon-x.svg';
 import oMarkImg from '@/assets/icon-o.svg';
 
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ValidTokens } from '@/lib/types/ValidTokens';
 
 type GameBoardCellProps = {
@@ -14,9 +14,11 @@ type GameBoardCellProps = {
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
   const gameEngine = useGameEngine();
-  const [mark, setMark] = useState<ValidTokens | undefined | null>(
-    gameEngine?.gameState.board[row][col]
-  );
+  const [mark, setMark] = useState<ValidTokens | undefined | null>(gameEngine?.board[row][col]);
+
+  useEffect(() => {
+    setMark(gameEngine?.board[row][col]);
+  }, [gameEngine?.board[row][col]]);
 
   const handleCellClick = () => {
     if (mark) return;

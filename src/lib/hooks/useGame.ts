@@ -6,6 +6,7 @@ import { GameEngine } from '@/lib/utils/GameEngine';
 export const initialGameState: GameState = {
   gameStarted: false,
   currentPlayer: 'x',
+  winningPlayer: null,
   playerX: null,
   playerO: null,
   board: Array(3)
