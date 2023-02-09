@@ -1,6 +1,7 @@
 import { GameState } from '@/lib/types/GameState';
 import { PlayerTypes, PlayerWinPossibilities } from '@/lib/types/PlayerTypes';
 import { GameBoard } from '@/lib/types/GameBoard';
+import { ValidTokens } from '@/lib/types/ValidTokens';
 
 export class GameEngine {
   private gameState: GameState;
@@ -53,7 +54,7 @@ export class GameEngine {
   playerTurn(row: number, col: number) {
     const updatedBoard: GameBoard = this.gameState.board;
     this.gameState.board[row][col] = this.currentPlayer;
-    const winner = this.determineWinner(updatedBoard);
+    const winner = this.determineWinner(updatedBoard, row, col);
 
     this.setGameState({
       ...this.gameState,
@@ -63,8 +64,8 @@ export class GameEngine {
     });
   }
 
-  determineWinner(board: GameBoard): PlayerWinPossibilities {
-    if (this.horizontalWin(board) || this.verticalWin(board) || this.diagonalWin(board)) {
+  determineWinner(board: GameBoard, row: number, col: number): PlayerWinPossibilities {
+    if (this.horizontalWin(board, row) || this.verticalWin(board, col) || this.diagonalWin(board)) {
       return this.currentPlayer;
     }
 
@@ -86,20 +87,41 @@ export class GameEngine {
     });
   }
 
-  private horizontalWin(board: GameBoard): boolean {
-    for (const row of board) {
-      if (row.every((value) => value === this.currentPlayer)) {
-        return true;
-      }
-    }
-    return false;
+  private horizontalWin(board: GameBoard, row: number): boolean {
+    return board[row].every((value) => value === this.currentPlayer);
   }
 
-  private verticalWin(board: GameBoard): boolean {
-    return false;
+  private verticalWin(board: GameBoard, col: number): boolean {
+    return board
+      .reduce((acc, _, row) => [...acc, board[row][col]], [] as (ValidTokens | null)[])
+      .every((colToken) => this.currentPlayer === colToken);
   }
 
   private diagonalWin(board: GameBoard): boolean {
+    const diagonals = [
+      [
+        [0, 0],
+        [1, 1],
+        [2, 2],
+      ],
+      [
+        [0, 2],
+        [1, 1],
+        [2, 0],
+      ],
+    ];
+
+    for (const diagonal of diagonals) {
+      const diagonalValues = diagonal.reduce(
+        (acc, currentDiagonal) => [...acc, board[currentDiagonal[0]][currentDiagonal[1]]],
+        [] as (ValidTokens | null)[]
+      );
+
+      if (diagonalValues.every((diagonalValue) => this.currentPlayer === diagonalValue)) {
+        return true;
+      }
+    }
+
     return false;
   }
 
