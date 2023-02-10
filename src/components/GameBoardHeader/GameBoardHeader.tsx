@@ -1,7 +1,7 @@
 import styles from './GameBoardHeader.module.css';
 
 import resetIcon from '@/assets/icon-restart.svg';
-import { Button, Logo } from '@/components';
+import { Button, Logo, TurnDisplay } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 export function GameBoardHeader() {
@@ -12,6 +12,7 @@ export function GameBoardHeader() {
       <span className={styles['logo-wrapper']}>
         <Logo />
       </span>
+      <TurnDisplay />
       <span className={styles['reset-btn-wrapper']}>
         {/* TODO: Update button to pop modal to reset the game */}
         <Button variant="secondary" color="silver" onClick={() => gameEngine?.clearBoard()}>
