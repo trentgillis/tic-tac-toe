@@ -1,3 +1,4 @@
+import { useGameEngine } from '@/lib/hooks/useGameEngine';
 import styled from 'styled-components';
 import { ScoreDisplay } from '../ScoreDisplay /ScoreDisplay';
 
@@ -14,11 +15,13 @@ const Layout = styled.article`
 `;
 
 export function ScoreDisplays() {
+  const gameEngine = useGameEngine();
+
   return (
     <Layout>
-      <ScoreDisplay playerText="p1 (x)" color="blue" />
-      <ScoreDisplay playerText="draw" color="silver" />
-      <ScoreDisplay playerText="p2 (o)" color="yellow" />
+      <ScoreDisplay playerText="p1 (x)" color="blue" score={gameEngine?.scores.x || 0} />
+      <ScoreDisplay playerText="draw" color="silver" score={gameEngine?.scores.d || 0} />
+      <ScoreDisplay playerText="p2 (o)" color="yellow" score={gameEngine?.scores.o || 0} />
     </Layout>
   );
 }

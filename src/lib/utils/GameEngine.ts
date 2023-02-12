@@ -36,6 +36,14 @@ export class GameEngine {
     return this.gameState.board;
   }
 
+  get scores() {
+    return {
+      x: this.gameState.playerX?.score,
+      o: this.gameState.playerO?.score,
+      d: this.gameState.draws,
+    };
+  }
+
   startGame(playerXType: PlayerTypes, playerOType: PlayerTypes) {
     this.setGameState({
       ...this.gameState,
@@ -43,10 +51,12 @@ export class GameEngine {
       playerX: {
         token: 'x',
         type: playerXType,
+        score: 0,
       },
       playerO: {
         token: 'o',
         type: playerOType,
+        score: 0,
       },
     });
   }
@@ -55,6 +65,10 @@ export class GameEngine {
     const updatedBoard: GameBoard = this.gameState.board;
     this.gameState.board[row][col] = this.currentPlayer;
     const winner = this.determineWinner(updatedBoard, row, col);
+
+    if (winner) {
+      this.updateScore(winner);
+    }
 
     this.setGameState({
       ...this.gameState,
@@ -136,5 +150,18 @@ export class GameEngine {
     }
 
     return true;
+  }
+
+  private updateScore(winner: PlayerWinPossibilities) {
+    if (winner === 'x') {
+      this.gameState.playerX.score += 1;
+      this.setGameState(this.gameState);
+    } else if (winner === 'o') {
+      this.gameState.playerO.score += 1;
+      this.setGameState(this.gameState);
+    } else if (winner === 'd') {
+      this.gameState.draws += 1;
+      this.setGameState(this.gameState);
+    }
   }
 }

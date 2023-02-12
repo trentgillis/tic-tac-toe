@@ -14,7 +14,7 @@ export const H1 = styled.h1<HeadingProps>`
   color: ${({ color }) => `var(--color-${color})`};
 `;
 
-export const H2 = styled.h1<HeadingProps>`
+export const H2 = styled.h2<HeadingProps>`
   font-size: 24px;
   font-weight: bold;
   letter-spacing: 1.5px;
@@ -22,7 +22,7 @@ export const H2 = styled.h1<HeadingProps>`
   color: ${({ color }) => `var(--color-${color})`};
 `;
 
-export const H3 = styled.h1<HeadingProps>`
+export const H3 = styled.h3<HeadingProps>`
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 1.25px;
@@ -30,7 +30,7 @@ export const H3 = styled.h1<HeadingProps>`
   color: ${({ color }) => `var(--color-${color})`};
 `;
 
-export const H4 = styled.h1<HeadingProps>`
+export const H4 = styled.h4<HeadingProps>`
   font-size: 16px;
   font-weight: bold;
   letter-spacing: 1px;

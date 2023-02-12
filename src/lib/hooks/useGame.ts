@@ -7,8 +7,17 @@ export const initialGameState: GameState = {
   gameStarted: false,
   currentPlayer: 'x',
   winningPlayer: null,
-  playerX: null,
-  playerO: null,
+  playerX: {
+    token: 'x',
+    type: 'player',
+    score: 0,
+  },
+  playerO: {
+    token: 'o',
+    type: 'player',
+    score: 0,
+  },
+  draws: 0,
   board: Array(3)
     .fill(null)
     .map(() => [null, null, null]),
