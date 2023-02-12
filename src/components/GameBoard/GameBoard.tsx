@@ -1,7 +1,17 @@
-import styles from './GameBoard.module.css';
+import styled from 'styled-components';
 
 import { GameBoardCell } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
+
+const Layout = styled.article`
+  grid-area: game-board;
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 20px;
+`;
 
 export function GameBoard() {
   const gameEngine = useGameEngine();
@@ -20,5 +30,5 @@ export function GameBoard() {
     return cells;
   };
 
-  return <article className={styles['game-board']}>{renderCells()}</article>;
+  return <Layout>{renderCells()}</Layout>;
 }

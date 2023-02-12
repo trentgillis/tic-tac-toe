@@ -21,14 +21,6 @@ const BoardWrapper = styled.div`
   display: grid;
   grid-template-areas: 'game-board' 'scores';
   gap: 20px;
-
-  ${GameBoard as any} {
-    grid-area: game-board;
-  }
-
-  ${ScoreDisplays as any} {
-    grid-area: scores;
-  }
 `;
 
 export function Game() {

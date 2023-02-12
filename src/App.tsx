@@ -10,7 +10,6 @@ export function App() {
 
   useEffect(() => {
     gameEngine.clearBoard();
-    console.log(gameEngine.winningPlayer);
   }, [gameEngine.winningPlayer]);
 
   return (

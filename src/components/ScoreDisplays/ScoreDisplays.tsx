@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { ScoreDisplay } from '../ScoreDisplay /ScoreDisplay';
 
 const Layout = styled.article`
+  grid-area: scores;
   width: 100%;
   height: 64px;
   display: grid;
