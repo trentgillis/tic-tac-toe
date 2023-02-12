@@ -2,7 +2,7 @@ import styles from './TurnDisplay.module.css';
 
 import xIcon from '@/assets/icon-x-silver.svg';
 import oIcon from '@/assets/icon-o-silver.svg';
-import { Heading } from '@/components';
+import { H4 } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 export function TurnDisplay() {
@@ -13,9 +13,7 @@ export function TurnDisplay() {
       <div className={styles['icon-wrapper']}>
         <img src={gameEngine?.currentPlayer === 'x' ? xIcon : oIcon} alt="current player icon" />
       </div>
-      <Heading size="xs" color="silver">
-        turn
-      </Heading>
+      <H4 color="silver">turn</H4>
     </div>
   );
 }

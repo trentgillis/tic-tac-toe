@@ -1,6 +1,6 @@
 import styles from './Button.module.css';
 
-import { Heading } from '@/components/Typography';
+import { H2 } from '@/components/Typography';
 import { ValidBtnColors } from '@/lib/types/ValidColors';
 
 type ButtonProps = {
@@ -19,9 +19,7 @@ export function Button({ variant, color, onClick, children }: ButtonProps) {
           className={`${styles['btn']} ${styles['btn-primary']} ${styles[`btn-${color}`]}`}
           onClick={(e) => onClick(e)}
         >
-          <Heading size="sm" color="dark-navy">
-            {children}
-          </Heading>
+          <H2 color="dark-navy">{children}</H2>
         </button>
       )}
       {variant === 'secondary' && (
