@@ -1,5 +1,3 @@
-import styles from './GameBoardCell.module.css';
-
 import xMarkImg from '@/assets/icon-x.svg';
 import oMarkImg from '@/assets/icon-o.svg';
 
