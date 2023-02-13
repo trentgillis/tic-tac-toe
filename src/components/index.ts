@@ -4,6 +4,7 @@ export * from './GameBoardCell/GameBoardCell';
 export * from './GameBoardHeader/GameBoardHeader';
 export * from './Logo/Logo';
 export * from './MarkButton/MarkButton';
+export * from './MenuButtons/MenuButtons';
 export * from './PlayerMarkSelect/PlayerMarkSelect';
 export * from './TurnDisplay/TurnDisplay';
 export * from './Typography';
