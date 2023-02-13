@@ -1,4 +1,4 @@
-import styles from './MarkButton.module.css';
+import styled from 'styled-components';
 
 import { ValidTokens } from '@/lib/types/ValidTokens';
 
@@ -10,6 +10,37 @@ type MarkButtonProps = {
   setPlayerOneToken: Function;
 };
 
+const Btn = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+  background-color: var(--color-dark-navy);
+  transition: background-color 0.3s ease;
+
+  :hover {
+    cursor: pointer;
+    background-color: var(--color-semi-dark-navy);
+  }
+
+  &.selected {
+    background-color: var(--color-silver);
+
+    :hover {
+      cursor: default;
+      background-color: var(--color-silver);
+    }
+  }
+`;
+
+const IconWrapper = styled.div`
+  width: 32px;
+  height: 32px;
+`;
+
 export function MarkButton({
   imgUrlLight,
   imgUrlDark,
@@ -20,14 +51,14 @@ export function MarkButton({
   const selected = playerOneToken === mark;
 
   return (
-    <button
+    <Btn
       type="button"
-      className={`${styles['mark-btn']} ${selected ? styles['mark-btn-selected'] : ''}`}
+      className={selected ? 'selected' : ''}
       onClick={() => setPlayerOneToken(mark)}
     >
-      <div className={styles['mark-icon-wrapper']}>
+      <IconWrapper>
         <img src={selected ? imgUrlDark : imgUrlLight} alt={`mark icon ${mark}`} />
-      </div>
-    </button>
+      </IconWrapper>
+    </Btn>
   );
 }
