@@ -1,16 +1,15 @@
-import styles from './BodyText.module.css';
-
-import { ValidColors } from '@/lib/types/ValidColors';
+import { ValidTextColors } from '@/lib/types/ValidColors';
+import styled from 'styled-components';
 
 type BodyTextProps = {
-  color: ValidColors;
+  color: ValidTextColors;
   children: React.ReactNode;
 };
 
-export function BodyText({ color, children }: BodyTextProps) {
-  return (
-    <p style={{ color: `var(--color-${color})` }} className={styles['body-text']}>
-      {children}
-    </p>
-  );
-}
+export const BodyText = styled.p<BodyTextProps>`
+  font-size: 14px;
+  font-weight: medium;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: ${({ color }) => `var(--color-${color})`};
+`;
