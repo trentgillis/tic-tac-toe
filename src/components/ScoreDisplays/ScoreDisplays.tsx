@@ -1,6 +1,6 @@
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 import styled from 'styled-components';
-import { ScoreDisplay } from '../ScoreDisplay /ScoreDisplay';
+import { ScoreDisplay } from '../ScoreDisplay/ScoreDisplay';
 
 const Layout = styled.article`
   grid-area: scores;

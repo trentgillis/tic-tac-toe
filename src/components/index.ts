@@ -8,4 +8,6 @@ export * from './MenuButtons/MenuButtons';
 export * from './Modal/Modal';
 export * from './PlayerMarkSelect/PlayerMarkSelect';
 export * from './TurnDisplay/TurnDisplay';
+export * from './ScoreDisplay/ScoreDisplay';
+export * from './ScoreDisplays/ScoreDisplays';
 export * from './Typography';

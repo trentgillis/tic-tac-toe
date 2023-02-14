@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import { GameBoard, GameBoardHeader } from '@/components';
-import { ScoreDisplays } from '@/components/ScoreDisplays/ScoreDisplays';
+import { GameBoard, GameBoardHeader, ScoreDisplays } from '@/components';
 import { useModal } from '@/lib/hooks/useModal';
 
 const Layout = styled.section`
