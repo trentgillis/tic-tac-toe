@@ -1,6 +1,6 @@
-import { ValidTokens } from '@/lib/types/ValidTokens';
-import { HumanPlayer } from '../utils/HumanPlayer';
-import { AIPlayer } from '../utils/AIPlayer';
+import { HumanPlayer } from '@/lib/utils/HumanPlayer';
+import { AIPlayer } from '@/lib/utils/AIPlayer';
+import { Board } from '@/lib/utils/Board';
 
 export type GameState = {
   inProgress: boolean;
@@ -9,5 +9,5 @@ export type GameState = {
   playerX: HumanPlayer | AIPlayer | null;
   playerO: HumanPlayer | AIPlayer | null;
   draws: number;
-  board: [ValidTokens | null, ValidTokens | null, ValidTokens | null][];
+  board: Board;
 };

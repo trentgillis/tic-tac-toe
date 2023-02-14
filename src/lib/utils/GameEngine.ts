@@ -1,9 +1,9 @@
 import { GameState } from '@/lib/types/GameState';
 import { PlayerWinPossibilities } from '@/lib/types/PlayerTypes';
-import { GameBoard } from '@/lib/types/GameBoard';
 import { ValidTokens } from '@/lib/types/ValidTokens';
-import { HumanPlayer } from './HumanPlayer';
-import { AIPlayer } from './AIPlayer';
+import { HumanPlayer } from '@/lib/utils/HumanPlayer';
+import { AIPlayer } from '@/lib/utils/AIPlayer';
+import { Board } from '@/lib/utils/Board';
 
 export class GameEngine {
   private gameState: GameState;
@@ -32,6 +32,14 @@ export class GameEngine {
 
   get board() {
     return this.gameState.board;
+  }
+
+  set board(board: Board) {
+    this.gameState.board = board;
+  }
+
+  get boardCells() {
+    return this.gameState.board.board;
   }
 
   get playerScores() {
@@ -88,91 +96,25 @@ export class GameEngine {
       throw new Error('Game is in invalid state. Cannot perform player move.');
     }
 
-    const updatedBoard: GameBoard = this.gameState.board;
-    this.gameState.board[row][col] = this.currentPlayer.token;
-    const winner = this.determineWinner(updatedBoard, row, col);
-
-    if (winner) {
-      this.updateScore(winner.token);
-    } else if (this.boardFull(updatedBoard)) {
+    this.board.placeMark(row, col, this.currentPlayer);
+    if (this.board.hasWin(row, col, this.currentPlayer)) {
+      this.updateScore(this.currentPlayer.token);
+    } else if (this.board.isBoardFull()) {
       this.updateScore('d');
     }
 
     this.gameState = {
       ...this.gameState,
-      winner,
+      winner: this.currentPlayer,
       currentPlayer:
         this.currentPlayer.token === 'x' ? this.gameState.playerO : this.gameState.playerX,
-      board: updatedBoard,
     };
     this.updateGameState();
   }
 
-  determineWinner(board: GameBoard, row: number, col: number): HumanPlayer | AIPlayer | null {
-    if (this.horizontalWin(board, row) || this.verticalWin(board, col) || this.diagonalWin(board)) {
-      return this.currentPlayer;
-    }
-
-    return null;
-  }
-
   clearBoard() {
-    const emptyBoard: GameBoard = Array(3)
-      .fill(null)
-      .map(() => [null, null, null]);
-    this.gameState.board = emptyBoard;
+    this.board = new Board();
     this.updateGameState();
-  }
-
-  private horizontalWin(board: GameBoard, row: number): boolean {
-    return board[row].every((value) => value === this.currentPlayer.token);
-  }
-
-  private verticalWin(board: GameBoard, col: number): boolean {
-    return board
-      .reduce((acc, _, row) => [...acc, board[row][col]], [] as (ValidTokens | null)[])
-      .every((colToken) => this.currentPlayer.token === colToken);
-  }
-
-  private diagonalWin(board: GameBoard): boolean {
-    const diagonals = [
-      [
-        [0, 0],
-        [1, 1],
-        [2, 2],
-      ],
-      [
-        [0, 2],
-        [1, 1],
-        [2, 0],
-      ],
-    ];
-
-    for (const diagonal of diagonals) {
-      const diagonalValues = diagonal.reduce(
-        (acc, currentDiagonal) => [...acc, board[currentDiagonal[0]][currentDiagonal[1]]],
-        [] as (ValidTokens | null)[]
-      );
-
-      if (diagonalValues.every((diagonalValue) => this.currentPlayer.token === diagonalValue)) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  /**
-   * Used to check if the board is full. This will be used to handle the case where the game has ended in a draw
-   */
-  private boardFull(board: GameBoard): boolean {
-    for (const row of board) {
-      if (row.some((value) => value === null)) {
-        return false;
-      }
-    }
-
-    return true;
   }
 
   private updateScore(winner: PlayerWinPossibilities) {

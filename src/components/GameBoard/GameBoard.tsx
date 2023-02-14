@@ -19,7 +19,7 @@ export function GameBoard() {
   const renderCells = (): React.ReactNode[] => {
     const cells: React.ReactNode[] = [];
 
-    gameEngine?.board?.map((boardRow, rowNumber) => {
+    gameEngine?.boardCells.map((boardRow, rowNumber) => {
       cells.push(
         ...boardRow.map((_, colNumber) => {
           return <GameBoardCell key={`${rowNumber}${colNumber}`} row={rowNumber} col={colNumber} />;

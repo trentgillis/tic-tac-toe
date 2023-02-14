@@ -54,11 +54,13 @@ const IconWrapper = styled.div`
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
   const gameEngine = useGameEngine();
-  const [mark, setMark] = useState<ValidTokens | undefined | null>(gameEngine?.board[row][col]);
+  const [mark, setMark] = useState<ValidTokens | undefined | null>(
+    gameEngine?.boardCells[row][col]
+  );
 
   useEffect(() => {
-    setMark(gameEngine?.board[row][col]);
-  }, [gameEngine?.board[row][col]]);
+    setMark(gameEngine?.board.board[row][col]);
+  }, [gameEngine?.boardCells[row][col]]);
 
   const handleCellClick = () => {
     if (mark) return;

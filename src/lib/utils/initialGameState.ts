@@ -1,4 +1,5 @@
-import { GameState } from '../types/GameState';
+import { GameState } from '@/lib/types/GameState';
+import { Board } from '@/lib/utils/Board';
 
 export const initialGameState: GameState = {
   inProgress: false,
@@ -7,7 +8,5 @@ export const initialGameState: GameState = {
   draws: 0,
   playerX: null,
   playerO: null,
-  board: Array(3)
-    .fill(null)
-    .map(() => [null, null, null]),
+  board: new Board(),
 };
