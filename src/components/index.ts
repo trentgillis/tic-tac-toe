@@ -5,6 +5,7 @@ export * from './GameBoardHeader/GameBoardHeader';
 export * from './Logo/Logo';
 export * from './MarkButton/MarkButton';
 export * from './MenuButtons/MenuButtons';
+export * from './Modal/Modal';
 export * from './PlayerMarkSelect/PlayerMarkSelect';
 export * from './TurnDisplay/TurnDisplay';
 export * from './Typography';

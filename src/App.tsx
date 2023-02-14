@@ -1,22 +1,38 @@
-import styles from './styles/App.module.css';
+import styled from 'styled-components';
 
 import { Home, Game } from '@/pages';
 import { GameEngineProvider } from '@/lib/context/gameEngineContext';
 import { useGame } from '@/lib/hooks/useGame';
-import { useEffect } from 'react';
+
+const Layout = styled.main`
+  width: 100%;
+  height: 100%;
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas: 'game';
+
+  & > * {
+    grid-column: game;
+  }
+
+  @media only screen and (min-width: 768px) {
+    padding: 0;
+    grid-template-columns: 1fr 460px 1fr;
+    grid-template-areas: '. game .';
+    align-items: center;
+    justify-items: center;
+  }
+`;
 
 export function App() {
   const { gameEngine } = useGame();
 
-  useEffect(() => {
-    gameEngine.clearBoard();
-  }, [gameEngine.winningPlayer]);
-
   return (
-    <main className={styles['layout']}>
+    <Layout>
       <GameEngineProvider value={gameEngine}>
         {gameEngine.gameStarted ? <Game /> : <Home />}
       </GameEngineProvider>
-    </main>
+    </Layout>
   );
 }

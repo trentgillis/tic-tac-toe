@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { GameBoard, GameBoardHeader } from '@/components';
 import { ScoreDisplays } from '@/components/ScoreDisplays/ScoreDisplays';
+import { useModal } from '@/lib/hooks/useModal';
 
 const Layout = styled.section`
   height: fit-content;
@@ -24,13 +25,24 @@ const BoardWrapper = styled.div`
 `;
 
 export function Game() {
+  const { Modal, show } = useModal();
+
   return (
-    <Layout>
-      <GameBoardHeader />
-      <BoardWrapper>
-        <GameBoard />
-        <ScoreDisplays />
-      </BoardWrapper>
-    </Layout>
+    <>
+      <Layout>
+        <GameBoardHeader />
+        <BoardWrapper>
+          <GameBoard />
+          <ScoreDisplays />
+        </BoardWrapper>
+        {/* TODO: Actually implement modal stuff */}
+        <button type="button" onClick={show}>
+          Show Modal
+        </button>
+      </Layout>
+      <Modal>
+        <h1>Winning player</h1>
+      </Modal>
+    </>
   );
 }
