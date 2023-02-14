@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { H2 } from '@/components/Typography';
+import { BodyText, H2 } from '@/components/Typography';
 import { ValidBtnColors } from '@/lib/types/ValidColors';
 
 type ButtonProps = {
@@ -60,6 +60,24 @@ const PrimaryButton = styled(StyledButton)`
   &.silver {
     box-shadow: inset 0px -8px 0px #6b8997;
   }
+
+  ${BodyText} {
+    font-weight: 700;
+  }
+
+  ${H2} {
+    display: none;
+  }
+
+  @media only screen and (min-width: 768px) {
+    ${BodyText} {
+      display: none;
+    }
+
+    ${H2} {
+      display: inline-block;
+    }
+  }
 `;
 
 const SecondaryButton = styled(StyledButton)`
@@ -84,12 +102,13 @@ export function Button({ variant, color, onClick, children }: ButtonProps) {
     <>
       {variant === 'primary' && (
         <PrimaryButton type="button" className={color} onClick={(e) => onClick(e)}>
+          <BodyText color="dark-navy">{children}</BodyText>
           <H2 color="dark-navy">{children}</H2>
         </PrimaryButton>
       )}
       {variant === 'secondary' && (
         <SecondaryButton type="button" className={color} onClick={(e) => onClick(e)}>
-          {children}
+          <BodyText color="dark-navy">{children}</BodyText>
         </SecondaryButton>
       )}
     </>
