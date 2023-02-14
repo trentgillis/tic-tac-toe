@@ -4,6 +4,7 @@ import { ValidTokens } from '@/lib/types/ValidTokens';
 import { HumanPlayer } from '@/lib/utils/HumanPlayer';
 import { AIPlayer } from '@/lib/utils/AIPlayer';
 import { Board } from '@/lib/utils/Board';
+import { initialGameState } from '@/lib/utils/initialGameState';
 
 export class GameEngine {
   private gameState: GameState;
@@ -32,10 +33,6 @@ export class GameEngine {
 
   get board() {
     return this.gameState.board;
-  }
-
-  set board(board: Board) {
-    this.gameState.board = board;
   }
 
   get boardCells() {
@@ -91,6 +88,14 @@ export class GameEngine {
     });
   }
 
+  restartGame() {
+    this.gameState = {
+      ...initialGameState,
+      board: new Board(),
+    };
+    this.setGameState(this.gameState);
+  }
+
   playerTurn(row: number, col: number) {
     if (!this.currentPlayer) {
       throw new Error('Game is in invalid state. Cannot perform player move.');
@@ -112,11 +117,6 @@ export class GameEngine {
     this.updateGameState();
   }
 
-  clearBoard() {
-    this.board = new Board();
-    this.updateGameState();
-  }
-
   private updateScore(winner: PlayerWinPossibilities) {
     if (!this.gameState.playerX || !this.gameState.playerO) {
       throw new Error('Game state is null, cannot perform method updateScore.');
@@ -124,13 +124,12 @@ export class GameEngine {
 
     if (winner === 'x') {
       this.gameState.playerX.score += 1;
-      this.setGameState(this.gameState);
     } else if (winner === 'o') {
       this.gameState.playerO.score += 1;
-      this.setGameState(this.gameState);
     } else if (winner === 'd') {
       this.gameState.draws += 1;
-      this.setGameState(this.gameState);
     }
+
+    this.updateGameState();
   }
 }

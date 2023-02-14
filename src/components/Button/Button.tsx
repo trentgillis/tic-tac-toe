@@ -13,6 +13,7 @@ type ButtonProps = {
 const StyledButton = styled.button`
   border: none;
   transition: background-color 0.3s ease;
+  text-transform: uppercase;
 
   :hover {
     cursor: pointer;
@@ -20,7 +21,6 @@ const StyledButton = styled.button`
 
   &.yellow {
     background-color: var(--color-yellow);
-    box-shadow: inset 0px -8px 0px #cc8b13;
 
     :hover {
       background-color: var(--color-yellow-hover);
@@ -29,7 +29,6 @@ const StyledButton = styled.button`
 
   &.blue {
     background-color: var(--color-blue);
-    box-shadow: inset 0px -8px 0px #118c87;
 
     :hover {
       background-color: var(--color-blue-hover);
@@ -38,7 +37,6 @@ const StyledButton = styled.button`
 
   &.silver {
     background-color: var(--color-silver);
-    box-shadow: inset 0px -4px 0px #6b8997;
 
     :hover {
       background-color: var(--color-silver-hover);
@@ -50,11 +48,35 @@ const PrimaryButton = styled(StyledButton)`
   width: 100%;
   padding: 16px 16px 24px 16px;
   border-radius: 15px;
+
+  &.yellow {
+    box-shadow: inset 0px -8px 0px #cc8b13;
+  }
+
+  &.blue {
+    box-shadow: inset 0px -8px 0px #118c87;
+  }
+
+  &.silver {
+    box-shadow: inset 0px -8px 0px #6b8997;
+  }
 `;
 
 const SecondaryButton = styled(StyledButton)`
   padding: 16px;
   border-radius: 10px;
+
+  &.yellow {
+    box-shadow: inset 0px -4px 0px #cc8b13;
+  }
+
+  &.blue {
+    box-shadow: inset 0px -4px 0px #118c87;
+  }
+
+  &.silver {
+    box-shadow: inset 0px -4px 0px #6b8997;
+  }
 `;
 
 export function Button({ variant, color, onClick, children }: ButtonProps) {

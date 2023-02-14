@@ -24,8 +24,6 @@ const BoardWrapper = styled.div`
 `;
 
 export function Game() {
-  const { Modal, show } = useModal();
-
   return (
     <>
       <Layout>
@@ -34,14 +32,7 @@ export function Game() {
           <GameBoard />
           <ScoreDisplays />
         </BoardWrapper>
-        {/* TODO: Actually implement modal stuff */}
-        <button type="button" onClick={show}>
-          Show Modal
-        </button>
       </Layout>
-      <Modal>
-        <h1>Winning player</h1>
-      </Modal>
     </>
   );
 }

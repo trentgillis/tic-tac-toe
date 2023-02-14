@@ -1,10 +1,8 @@
+import styled from 'styled-components';
+
 import xMarkImg from '@/assets/icon-x.svg';
 import oMarkImg from '@/assets/icon-o.svg';
-
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
-import { useEffect, useState } from 'react';
-import { ValidTokens } from '@/lib/types/ValidTokens';
-import styled from 'styled-components';
 
 type GameBoardCellProps = {
   row: number;
@@ -54,30 +52,26 @@ const IconWrapper = styled.div`
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
   const gameEngine = useGameEngine();
-  const [mark, setMark] = useState<ValidTokens | undefined | null>(
-    gameEngine?.boardCells[row][col]
-  );
-
-  useEffect(() => {
-    setMark(gameEngine?.board.board[row][col]);
-  }, [gameEngine?.boardCells[row][col]]);
 
   const handleCellClick = () => {
-    if (mark) return;
+    if (gameEngine?.boardCells[row][col]) return;
 
     gameEngine?.playerTurn(row, col);
-    setMark(gameEngine?.currentPlayer.token);
   };
 
   return (
     <Layout
       className={`
         ${`current-player-${gameEngine?.currentPlayer.token}`}
-        ${mark ? 'populated' : ''}
+        ${gameEngine?.boardCells[row][col] ? 'populated' : ''}
       `}
       onClick={() => handleCellClick()}
     >
-      <IconWrapper>{mark && <img src={mark === 'x' ? xMarkImg : oMarkImg} />}</IconWrapper>
+      <IconWrapper>
+        {gameEngine?.boardCells[row][col] && (
+          <img src={gameEngine?.boardCells[row][col] === 'x' ? xMarkImg : oMarkImg} />
+        )}
+      </IconWrapper>
     </Layout>
   );
 }

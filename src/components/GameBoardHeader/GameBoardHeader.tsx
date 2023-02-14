@@ -1,8 +1,11 @@
 import styled from 'styled-components';
 
 import restartIcon from '@/assets/icon-restart.svg';
-import { Button, Logo, TurnDisplay } from '@/components';
+import { BodyText, Button, H2, Logo, TurnDisplay } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
+import { useModal } from '@/lib/hooks/useModal';
+import { useState } from 'react';
+import { RestartModal } from '../RestartModal/RestartModal';
 
 const Layout = styled.article`
   grid-area: header;
@@ -38,20 +41,24 @@ const ButtonWrapper = styled.span`
 `;
 
 export function GameBoardHeader() {
-  const gameEngine = useGameEngine();
+  const [isOpen, setIsOpen] = useState(false);
+  const show = () => setIsOpen(true);
+  const hide = () => setIsOpen(false);
 
   return (
-    <Layout>
-      <LogoWrapper>
-        <Logo />
-      </LogoWrapper>
-      <TurnDisplay />
-      <ButtonWrapper>
-        {/* TODO: Update button to pop modal to reset the game */}
-        <Button variant="secondary" color="silver" onClick={() => gameEngine?.clearBoard()}>
-          <img src={restartIcon} alt="restart button icon" />
-        </Button>
-      </ButtonWrapper>
-    </Layout>
+    <>
+      <Layout>
+        <LogoWrapper>
+          <Logo />
+        </LogoWrapper>
+        <TurnDisplay />
+        <ButtonWrapper>
+          <Button variant="secondary" color="silver" onClick={show}>
+            <img src={restartIcon} alt="restart button icon" />
+          </Button>
+        </ButtonWrapper>
+      </Layout>
+      <RestartModal isOpen={isOpen} hide={hide} />
+    </>
   );
 }
