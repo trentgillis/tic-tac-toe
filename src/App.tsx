@@ -31,7 +31,7 @@ export function App() {
   return (
     <Layout>
       <GameEngineProvider value={gameEngine}>
-        {gameEngine.gameStarted ? <Game /> : <Home />}
+        {gameEngine.gameInProgress ? <Game /> : <Home />}
       </GameEngineProvider>
     </Layout>
   );

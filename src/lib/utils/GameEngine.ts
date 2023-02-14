@@ -1,7 +1,9 @@
 import { GameState } from '@/lib/types/GameState';
-import { PlayerTypes, PlayerWinPossibilities } from '@/lib/types/PlayerTypes';
+import { PlayerWinPossibilities } from '@/lib/types/PlayerTypes';
 import { GameBoard } from '@/lib/types/GameBoard';
 import { ValidTokens } from '@/lib/types/ValidTokens';
+import { HumanPlayer } from './HumanPlayer';
+import { AIPlayer } from './AIPlayer';
 
 export class GameEngine {
   private gameState: GameState;
@@ -12,31 +14,27 @@ export class GameEngine {
     this.gameState = gameState;
   }
 
-  get winningPlayer() {
-    return this.gameState.winningPlayer;
+  get winner() {
+    return this.gameState.winner;
   }
 
   get currentPlayer() {
+    if (!this.gameState.currentPlayer) {
+      throw new Error('GameState Error: Current player is undefined.');
+    }
+
     return this.gameState.currentPlayer;
   }
 
-  get currentPlayerType() {
-    if (this.currentPlayer === 'x') {
-      return this.gameState.playerX?.type;
-    } else {
-      return this.gameState.playerO?.type;
-    }
-  }
-
-  get gameStarted() {
-    return this.gameState.gameStarted;
+  get gameInProgress() {
+    return this.gameState.inProgress;
   }
 
   get board() {
     return this.gameState.board;
   }
 
-  get scores() {
+  get playerScores() {
     return {
       x: this.gameState.playerX?.score,
       o: this.gameState.playerO?.score,
@@ -44,71 +42,96 @@ export class GameEngine {
     };
   }
 
-  startGame(playerXType: PlayerTypes, playerOType: PlayerTypes) {
+  updateGameState() {
+    this.setGameState(this.gameState);
+  }
+
+  startHumanGame() {
+    const playerX = new HumanPlayer('x', 0, 'Player 1');
+    const playerO = new HumanPlayer('o', 0, 'Player 2');
+
     this.setGameState({
       ...this.gameState,
-      gameStarted: true,
-      playerX: {
-        token: 'x',
-        type: playerXType,
-        score: 0,
-      },
-      playerO: {
-        token: 'o',
-        type: playerOType,
-        score: 0,
-      },
+      inProgress: true,
+      currentPlayer: playerX,
+      winner: null,
+      playerX,
+      playerO,
+      draws: 0,
+    });
+  }
+
+  startAIGame(selectedToken: ValidTokens) {
+    let playerX = null;
+    let playerO = null;
+    if (selectedToken === 'x') {
+      playerX = new HumanPlayer('x', 0);
+      playerO = new AIPlayer('o', 0);
+    } else {
+      playerX = new AIPlayer('x', 0);
+      playerO = new HumanPlayer('o', 0);
+    }
+
+    this.setGameState({
+      ...this.gameState,
+      inProgress: true,
+      currentPlayer: playerX,
+      winner: null,
+      playerX,
+      playerO,
+      draws: 0,
     });
   }
 
   playerTurn(row: number, col: number) {
+    if (!this.currentPlayer) {
+      throw new Error('Game is in invalid state. Cannot perform player move.');
+    }
+
     const updatedBoard: GameBoard = this.gameState.board;
-    this.gameState.board[row][col] = this.currentPlayer;
+    this.gameState.board[row][col] = this.currentPlayer.token;
     const winner = this.determineWinner(updatedBoard, row, col);
 
     if (winner) {
-      this.updateScore(winner);
+      this.updateScore(winner.token);
+    } else if (this.boardFull(updatedBoard)) {
+      this.updateScore('d');
     }
 
-    this.setGameState({
+    this.gameState = {
       ...this.gameState,
-      winningPlayer: winner,
-      currentPlayer: this.currentPlayer === 'x' ? 'o' : 'x',
+      winner,
+      currentPlayer:
+        this.currentPlayer.token === 'x' ? this.gameState.playerO : this.gameState.playerX,
       board: updatedBoard,
-    });
+    };
+    this.updateGameState();
   }
 
-  determineWinner(board: GameBoard, row: number, col: number): PlayerWinPossibilities {
+  determineWinner(board: GameBoard, row: number, col: number): HumanPlayer | AIPlayer | null {
     if (this.horizontalWin(board, row) || this.verticalWin(board, col) || this.diagonalWin(board)) {
       return this.currentPlayer;
-    }
-
-    if (this.boardFull(board)) {
-      return 'd';
     }
 
     return null;
   }
 
   clearBoard() {
-    this.setGameState({
-      ...this.gameState,
-      currentPlayer: 'x',
-      winningPlayer: null,
-      board: Array(3)
-        .fill(null)
-        .map(() => [null, null, null]),
-    });
+    const emptyBoard: GameBoard = Array(3)
+      .fill(null)
+      .map(() => [null, null, null]);
+    this.gameState.board = emptyBoard;
+    this.updateGameState();
   }
 
   private horizontalWin(board: GameBoard, row: number): boolean {
-    return board[row].every((value) => value === this.currentPlayer);
+    return board[row].every((value) => value === this.currentPlayer.token);
   }
 
   private verticalWin(board: GameBoard, col: number): boolean {
     return board
       .reduce((acc, _, row) => [...acc, board[row][col]], [] as (ValidTokens | null)[])
-      .every((colToken) => this.currentPlayer === colToken);
+      .every((colToken) => this.currentPlayer.token === colToken);
   }
 
   private diagonalWin(board: GameBoard): boolean {
@@ -131,7 +154,7 @@ export class GameEngine {
         [] as (ValidTokens | null)[]
       );
 
-      if (diagonalValues.every((diagonalValue) => this.currentPlayer === diagonalValue)) {
+      if (diagonalValues.every((diagonalValue) => this.currentPlayer.token === diagonalValue)) {
         return true;
       }
     }
@@ -153,6 +176,10 @@ export class GameEngine {
   }
 
   private updateScore(winner: PlayerWinPossibilities) {
+    if (!this.gameState.playerX || !this.gameState.playerO) {
+      throw new Error('Game state is null, cannot perform method updateScore.');
+    }
+
     if (winner === 'x') {
       this.gameState.playerX.score += 1;
       this.setGameState(this.gameState);

@@ -2,9 +2,10 @@ import styled from 'styled-components';
 
 import { Button } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
+import { ValidTokens } from '@/lib/types/ValidTokens';
 
 type MenuButtonsProps = {
-  playerOneToken: string;
+  playerOneToken: ValidTokens;
 };
 
 const Layout = styled.article`
@@ -18,10 +19,11 @@ export function MenuButtons({ playerOneToken }: MenuButtonsProps) {
   const gameEngine = useGameEngine();
 
   const startGame = (type: 'player' | 'cpu') => {
-    const playerXType = playerOneToken === 'x' ? 'player' : type;
-    const playerOType = playerOneToken === 'o' ? 'player' : type;
-
-    gameEngine?.startGame(playerXType, playerOType);
+    if (type === 'cpu') {
+      gameEngine?.startAIGame(playerOneToken);
+    } else {
+      gameEngine?.startHumanGame();
+    }
   };
   return (
     <Layout>

@@ -64,13 +64,13 @@ export function GameBoardCell({ row, col }: GameBoardCellProps) {
     if (mark) return;
 
     gameEngine?.playerTurn(row, col);
-    setMark(gameEngine?.currentPlayer);
+    setMark(gameEngine?.currentPlayer.token);
   };
 
   return (
     <Layout
       className={`
-        ${`current-player-${gameEngine?.currentPlayer}`}
+        ${`current-player-${gameEngine?.currentPlayer.token}`}
         ${mark ? 'populated' : ''}
       `}
       onClick={() => handleCellClick()}
