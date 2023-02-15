@@ -42,12 +42,17 @@ const Layout = styled.div`
 `;
 
 const IconWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-size: 64px 64px;
+  padding-bottom: 8px;
+
+  @media only screen and (min-width: 768px) {
+    width: 64px;
+    height: 64px;
+  }
 `;
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
