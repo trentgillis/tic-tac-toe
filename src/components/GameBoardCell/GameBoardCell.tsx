@@ -29,10 +29,12 @@ const Layout = styled.div`
   @media only screen and (min-width: 768px) {
     &.current-player-x:hover:not(.populated) > * {
       background: url('/src/assets/icon-x-outline.svg') no-repeat center;
+      background-size: contain;
     }
 
-    &.current-player-o:hover:not(.populated) > * {
+    &.current-player-o:hover:not(.populated) > div {
       background: url('/src/assets/icon-o-outline.svg') no-repeat center;
+      background-size: contain;
     }
 
     &.populated {
@@ -47,7 +49,7 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-bottom: 8px;
+  margin-bottom: 8px;
 
   @media only screen and (min-width: 768px) {
     width: 64px;
