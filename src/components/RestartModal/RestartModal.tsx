@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BodyText, Button, H2, Modal } from '@/components';
+import { Button, H2, Modal } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 type RestartModalProps = {
@@ -32,10 +32,10 @@ export function RestartModal({ isOpen, hide }: RestartModalProps) {
         <H2 color="silver">restart game?</H2>
         <ModalButtonWrapper>
           <Button variant="secondary" color="silver" onClick={hide}>
-            <BodyText color="dark-navy">no, cancel</BodyText>
+            no, cancel
           </Button>
           <Button variant="secondary" color="yellow" onClick={() => gameEngine?.restartGame()}>
-            <BodyText color="dark-navy">yes, restart</BodyText>
+            yes, restart
           </Button>
         </ModalButtonWrapper>
       </ModalContentWrapper>
