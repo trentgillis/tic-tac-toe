@@ -18,8 +18,8 @@ const Layout = styled.article`
 export function MenuButtons({ playerOneToken }: MenuButtonsProps) {
   const gameEngine = useGameEngine();
 
-  const startGame = (type: 'player' | 'cpu') => {
-    if (type === 'cpu') {
+  const startGame = (type: 'player' | 'ai') => {
+    if (type === 'ai') {
       gameEngine?.startAIGame(playerOneToken);
     } else {
       gameEngine?.startHumanGame(playerOneToken);
@@ -27,8 +27,8 @@ export function MenuButtons({ playerOneToken }: MenuButtonsProps) {
   };
   return (
     <Layout>
-      <Button variant="primary" color="yellow" onClick={() => startGame('cpu')}>
-        new game &#40;vs cpu&#41;
+      <Button variant="primary" color="yellow" onClick={() => startGame('ai')}>
+        new game &#40;vs ai&#41;
       </Button>
       <Button variant="primary" color="blue" onClick={() => startGame('player')}>
         new game &#40;vs player&#41;
