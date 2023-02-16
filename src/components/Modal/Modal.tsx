@@ -23,6 +23,10 @@ const StyledDialogContent = styled(DialogContent)`
   justify-content: center;
   align-items: center;
   background-color: var(--color-semi-dark-navy);
+
+  @media only screen and (min-width: 768px) {
+    height: 266px;
+  }
 `;
 
 export const Modal = memo(({ isOpen, children }: ModalProps) => {
