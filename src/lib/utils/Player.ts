@@ -9,11 +9,7 @@ export class Player {
     this.score = score;
   }
 
-  getWinMessage() {
-    return 'You won!';
-  }
-
-  getLossMessage() {
-    return 'Oh no... you lost...';
+  getWinMessage(): string {
+    return '';
   }
 }

@@ -4,6 +4,7 @@ import { Board } from '@/lib/utils/Board';
 
 export type GameState = {
   inProgress: boolean;
+  gameType: 'ai' | 'pvp' | null;
   currentPlayer: HumanPlayer | AIPlayer | null;
   winner: HumanPlayer | AIPlayer | null;
   playerX: HumanPlayer | AIPlayer | null;

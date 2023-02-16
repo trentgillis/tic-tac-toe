@@ -27,6 +27,10 @@ export class GameEngine {
     return this.gameState.currentPlayer;
   }
 
+  get gameType() {
+    return this.gameState.gameType;
+  }
+
   get gameInProgress() {
     return this.gameState.inProgress;
   }
@@ -57,6 +61,7 @@ export class GameEngine {
 
     this.setGameState({
       ...this.gameState,
+      gameType: 'pvp',
       inProgress: true,
       currentPlayer: playerX,
       winner: null,
@@ -70,15 +75,16 @@ export class GameEngine {
     let playerX = null;
     let playerO = null;
     if (selectedToken === 'x') {
-      playerX = new HumanPlayer('x', 0);
+      playerX = new HumanPlayer('x', 0, 'Player 1', 'You win!');
       playerO = new AIPlayer('o', 0);
     } else {
       playerX = new AIPlayer('x', 0);
-      playerO = new HumanPlayer('o', 0);
+      playerO = new HumanPlayer('o', 0, 'Player 1', 'You win!');
     }
 
     this.setGameState({
       ...this.gameState,
+      gameType: 'ai',
       inProgress: true,
       currentPlayer: playerX,
       winner: null,

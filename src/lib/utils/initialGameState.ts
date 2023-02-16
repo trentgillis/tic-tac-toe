@@ -2,6 +2,7 @@ import { GameState } from '@/lib/types/GameState';
 import { Board } from '@/lib/utils/Board';
 
 export const initialGameState: GameState = {
+  gameType: null,
   inProgress: false,
   currentPlayer: null,
   winner: null,

@@ -6,6 +6,10 @@ export class AIPlayer extends Player {
     super(token, score);
   }
 
+  getWinMessage(): string {
+    return 'on no, you lost...';
+  }
+
   getBestMove() {
     // TODO: NOOP
   }

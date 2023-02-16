@@ -57,19 +57,19 @@ const ButtonWrappers = styled.div`
 export function WinnerModal({ isOpen }: WinnerModalProps) {
   const gameEngine = useGameEngine();
 
-  const winnerIcon = gameEngine?.winner?.token === 'x' ? xMarkIcon : oMarkIcon;
-  const winnerTextColor = gameEngine?.winner?.token === 'x' ? 'blue' : 'yellow';
+  const winningMarkIcon = gameEngine?.winner?.token === 'x' ? xMarkIcon : oMarkIcon;
+  const winningMarkTextColor = gameEngine?.winner?.token === 'x' ? 'blue' : 'yellow';
 
   return (
     <Modal isOpen={isOpen}>
       <ModalContentWrapper>
-        <BodyText color="silver">oh no, you lost...</BodyText>
+        <BodyText color="silver">{gameEngine?.winner?.getWinMessage()}</BodyText>
         <MarkTextWrapper>
           <MarkIconWrapper>
-            <img src={winnerIcon} alt="winner icon" />
+            <img src={winningMarkIcon} alt="winning mark icon" />
           </MarkIconWrapper>
-          <H2 color={winnerTextColor}>takes the round</H2>
-          <H1 color={winnerTextColor}>takes the round</H1>
+          <H2 color={winningMarkTextColor}>takes the round</H2>
+          <H1 color={winningMarkTextColor}>takes the round</H1>
         </MarkTextWrapper>
         <ButtonWrappers>
           <Button variant="secondary" color="silver" onClick={() => gameEngine?.restartGame()}>
