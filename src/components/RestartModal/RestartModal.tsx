@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Button, H2, Modal } from '@/components';
+import { Button, H1, H2, Modal } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 type RestartModalProps = {
@@ -16,6 +16,20 @@ const ModalContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   gap: 24px;
+
+  ${H1} {
+    display: none;
+  }
+
+  @media only screen and (min-width: 768px) {
+    ${H1} {
+      display: inline-block;
+    }
+
+    ${H2} {
+      display: none;
+    }
+  }
 `;
 
 const ModalButtonWrapper = styled.div`
@@ -29,6 +43,7 @@ export function RestartModal({ isOpen, hide }: RestartModalProps) {
   return (
     <Modal isOpen={isOpen}>
       <ModalContentWrapper>
+        <H1 color="silver">restart game?</H1>
         <H2 color="silver">restart game?</H2>
         <ModalButtonWrapper>
           <Button variant="secondary" color="silver" onClick={hide}>
