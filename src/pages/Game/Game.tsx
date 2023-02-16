@@ -1,7 +1,8 @@
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { GameBoard, GameBoardHeader, ScoreDisplays } from '@/components';
-import { useModal } from '@/lib/hooks/useModal';
+import { GameBoard, GameBoardHeader, ScoreDisplays, WinnerModal } from '@/components';
+import { useGameEngine } from '@/lib/hooks/useGameEngine';
 
 const Layout = styled.section`
   height: fit-content;
@@ -24,6 +25,13 @@ const BoardWrapper = styled.div`
 `;
 
 export function Game() {
+  const gameEngine = useGameEngine();
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setIsOpen(gameEngine?.winner !== null);
+  }, [gameEngine?.winner]);
+
   return (
     <>
       <Layout>
@@ -33,6 +41,7 @@ export function Game() {
           <ScoreDisplays />
         </BoardWrapper>
       </Layout>
+      <WinnerModal isOpen={isOpen} />
     </>
   );
 }

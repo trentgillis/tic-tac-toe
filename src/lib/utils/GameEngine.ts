@@ -96,13 +96,26 @@ export class GameEngine {
     this.setGameState(this.gameState);
   }
 
+  nextRound() {
+    this.gameState = {
+      ...this.gameState,
+      winner: null,
+      currentPlayer: this.gameState.playerX,
+      board: new Board(),
+    };
+    this.setGameState(this.gameState);
+  }
+
   playerTurn(row: number, col: number) {
     if (!this.currentPlayer) {
       throw new Error('Game is in invalid state. Cannot perform player move.');
     }
 
+    let winningPlayer = null;
+
     this.board.placeMark(row, col, this.currentPlayer);
     if (this.board.hasWin(row, col, this.currentPlayer)) {
+      winningPlayer = this.currentPlayer;
       this.updateScore(this.currentPlayer.token);
     } else if (this.board.isBoardFull()) {
       this.updateScore('d');
@@ -110,7 +123,7 @@ export class GameEngine {
 
     this.gameState = {
       ...this.gameState,
-      winner: this.currentPlayer,
+      winner: winningPlayer,
       currentPlayer:
         this.currentPlayer.token === 'x' ? this.gameState.playerO : this.gameState.playerX,
     };
