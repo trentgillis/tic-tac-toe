@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BodyText, H3, H4 } from '../Typography';
+import { BodyText, H2, H3, H4 } from '../Typography';
 
 type ScoreDisplayProps = {
   playerText: string;
@@ -17,16 +17,16 @@ const Layout = styled.div<{ color: string }>`
   background-color: ${({ color }) => `var(--color-${color})`};
   border-radius: 15px;
 
-  ${H3} {
+  ${H2} {
     display: none;
   }
 
   @media only screen and (min-width: 768px) {
-    ${H3} {
+    ${H2} {
       display: inline;
     }
 
-    ${H4} {
+    ${H3} {
       display: none;
     }
   }
@@ -36,8 +36,8 @@ export function ScoreDisplay({ playerText, color, score }: ScoreDisplayProps) {
   return (
     <Layout color={color}>
       <BodyText color="dark-navy">{playerText}</BodyText>
+      <H2 color="dark-navy">{score}</H2>
       <H3 color="dark-navy">{score}</H3>
-      <H4 color="dark-navy">{score}</H4>
     </Layout>
   );
 }

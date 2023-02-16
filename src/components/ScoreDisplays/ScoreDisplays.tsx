@@ -25,7 +25,7 @@ export function ScoreDisplays() {
         color="blue"
         score={gameEngine?.playerScores.x || 0}
       />
-      <ScoreDisplay playerText="draw" color="silver" score={gameEngine?.playerScores.d || 0} />
+      <ScoreDisplay playerText="ties" color="silver" score={gameEngine?.playerScores.d || 0} />
       <ScoreDisplay
         playerText={`O (${gameEngine?.playerO?.playerShortName})`}
         color="yellow"
