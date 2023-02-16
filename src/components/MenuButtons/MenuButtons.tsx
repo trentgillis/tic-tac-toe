@@ -22,7 +22,7 @@ export function MenuButtons({ playerOneToken }: MenuButtonsProps) {
     if (type === 'cpu') {
       gameEngine?.startAIGame(playerOneToken);
     } else {
-      gameEngine?.startHumanGame();
+      gameEngine?.startHumanGame(playerOneToken);
     }
   };
   return (

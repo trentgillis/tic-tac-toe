@@ -51,13 +51,28 @@ export class GameEngine {
     };
   }
 
+  get playerX() {
+    return this.gameState.playerX;
+  }
+
+  get playerO() {
+    return this.gameState.playerO;
+  }
+
   updateGameState() {
     this.setGameState(this.gameState);
   }
 
-  startHumanGame() {
-    const playerX = new HumanPlayer('x', 0, 'Player 1');
-    const playerO = new HumanPlayer('o', 0, 'Player 2');
+  startHumanGame(selectedToken: ValidTokens) {
+    let playerX;
+    let playerO;
+    if (selectedToken === 'x') {
+      playerX = new HumanPlayer('x', 0, 'Player 1', 'P1');
+      playerO = new HumanPlayer('o', 0, 'Player 2', 'P2');
+    } else {
+      playerX = new HumanPlayer('x', 0, 'Player 2', 'P2');
+      playerO = new HumanPlayer('o', 0, 'Player 1', 'P1');
+    }
 
     this.setGameState({
       ...this.gameState,
@@ -72,14 +87,14 @@ export class GameEngine {
   }
 
   startAIGame(selectedToken: ValidTokens) {
-    let playerX = null;
-    let playerO = null;
+    let playerX;
+    let playerO;
     if (selectedToken === 'x') {
-      playerX = new HumanPlayer('x', 0, 'Player 1', 'You win!');
+      playerX = new HumanPlayer('x', 0, 'Player 1', 'You', 'You win!');
       playerO = new AIPlayer('o', 0);
     } else {
       playerX = new AIPlayer('x', 0);
-      playerO = new HumanPlayer('o', 0, 'Player 1', 'You win!');
+      playerO = new HumanPlayer('o', 0, 'Player 1', 'You', 'You win!');
     }
 
     this.setGameState({

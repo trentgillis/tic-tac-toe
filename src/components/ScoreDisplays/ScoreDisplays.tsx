@@ -20,9 +20,17 @@ export function ScoreDisplays() {
 
   return (
     <Layout>
-      <ScoreDisplay playerText="p1 (x)" color="blue" score={gameEngine?.playerScores.x || 0} />
+      <ScoreDisplay
+        playerText={`X (${gameEngine?.playerX?.playerShortName})`}
+        color="blue"
+        score={gameEngine?.playerScores.x || 0}
+      />
       <ScoreDisplay playerText="draw" color="silver" score={gameEngine?.playerScores.d || 0} />
-      <ScoreDisplay playerText="p2 (o)" color="yellow" score={gameEngine?.playerScores.o || 0} />
+      <ScoreDisplay
+        playerText={`O (${gameEngine?.playerO?.playerShortName})`}
+        color="yellow"
+        score={gameEngine?.playerScores.o || 0}
+      />
     </Layout>
   );
 }
