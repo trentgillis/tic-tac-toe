@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import xMarkImg from '@/assets/icon-x.svg';
 import oMarkImg from '@/assets/icon-o.svg';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
+import { AIPlayer } from '@/lib/utils/AIPlayer';
 
 type GameBoardCellProps = {
   row: number;
@@ -22,17 +23,17 @@ const Layout = styled.div`
   justify-content: center;
   aspect-ratio: 1 / 1;
 
-  &:hover:not(.populated) {
+  &:hover:not(.not-clickable) {
     cursor: pointer;
   }
 
   @media only screen and (min-width: 768px) {
-    &.current-player-x:hover:not(.populated) > * {
+    &.current-player-x:hover:not(.not-clickable) > * {
       background: url('/src/assets/icon-x-outline.svg') no-repeat center;
       background-size: contain;
     }
 
-    &.current-player-o:hover:not(.populated) > div {
+    &.current-player-o:hover:not(.not-clickable) > div {
       background: url('/src/assets/icon-o-outline.svg') no-repeat center;
       background-size: contain;
     }
@@ -62,6 +63,7 @@ export function GameBoardCell({ row, col }: GameBoardCellProps) {
 
   const handleCellClick = () => {
     if (gameEngine?.boardCells[row][col]) return;
+    if (gameEngine?.currentPlayer instanceof AIPlayer) return;
 
     gameEngine?.playerTurn(row, col);
   };
@@ -70,7 +72,11 @@ export function GameBoardCell({ row, col }: GameBoardCellProps) {
     <Layout
       className={`
         ${`current-player-${gameEngine?.currentPlayer.token}`}
-        ${gameEngine?.boardCells[row][col] ? 'populated' : ''}
+        ${
+          gameEngine?.boardCells[row][col] || gameEngine?.currentPlayer instanceof AIPlayer
+            ? 'not-clickable'
+            : ''
+        }
       `}
       onClick={() => handleCellClick()}
     >
