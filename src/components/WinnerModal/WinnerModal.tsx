@@ -30,6 +30,8 @@ const MarkTextWrapper = styled.div`
   }
 
   @media only screen and (min-width: 768px) {
+    gap: 24px;
+
     ${H1} {
       display: inline-block;
     }
@@ -43,6 +45,11 @@ const MarkTextWrapper = styled.div`
 const MarkIconWrapper = styled.div`
   width: 28px;
   height: 28px;
+
+  @media only screen and (min-width: 768px) {
+    width: 64px;
+    height: 64px;
+  }
 `;
 
 const ButtonWrappers = styled.div`
