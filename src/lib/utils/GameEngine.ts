@@ -59,6 +59,10 @@ export class GameEngine {
     return this.gameState.playerO;
   }
 
+  get roundCompleted() {
+    return this.gameState.roundCompleted;
+  }
+
   updateGameState() {
     this.setGameState(this.gameState);
   }
@@ -120,6 +124,7 @@ export class GameEngine {
   nextRound() {
     this.gameState = {
       ...this.gameState,
+      roundCompleted: false,
       winner: null,
       currentPlayer: this.gameState.playerX,
       board: new Board(),
@@ -133,17 +138,21 @@ export class GameEngine {
     }
 
     let winningPlayer = null;
+    let roundCompleted = false;
 
     this.board.placeMark(row, col, this.currentPlayer);
     if (this.board.hasWin(row, col, this.currentPlayer)) {
+      roundCompleted = true;
       winningPlayer = this.currentPlayer;
       this.updateScore(this.currentPlayer.token);
     } else if (this.board.isBoardFull()) {
+      roundCompleted = true;
       this.updateScore('d');
     }
 
     this.gameState = {
       ...this.gameState,
+      roundCompleted,
       winner: winningPlayer,
       currentPlayer:
         this.currentPlayer.token === 'x' ? this.gameState.playerO : this.gameState.playerX,

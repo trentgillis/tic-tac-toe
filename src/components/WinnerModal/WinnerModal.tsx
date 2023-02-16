@@ -70,13 +70,24 @@ export function WinnerModal({ isOpen }: WinnerModalProps) {
   return (
     <Modal isOpen={isOpen}>
       <ModalContentWrapper>
-        <BodyText color="silver">{gameEngine?.winner?.getWinMessage()}</BodyText>
+        {gameEngine?.winner && (
+          <BodyText color="silver">{gameEngine?.winner?.getWinMessage()}</BodyText>
+        )}
         <MarkTextWrapper>
-          <MarkIconWrapper>
-            <img src={winningMarkIcon} alt="winning mark icon" />
-          </MarkIconWrapper>
-          <H2 color={winningMarkTextColor}>takes the round</H2>
-          <H1 color={winningMarkTextColor}>takes the round</H1>
+          {gameEngine?.winner ? (
+            <>
+              <MarkIconWrapper>
+                <img src={winningMarkIcon} alt="winning mark icon" />
+              </MarkIconWrapper>
+              <H2 color={winningMarkTextColor}>takes the round</H2>
+              <H1 color={winningMarkTextColor}>takes the round</H1>
+            </>
+          ) : (
+            <>
+              <H2 color="silver">round tied</H2>
+              <H1 color="silver">round tied</H1>
+            </>
+          )}
         </MarkTextWrapper>
         <ButtonWrappers>
           <Button variant="secondary" color="silver" onClick={() => gameEngine?.restartGame()}>

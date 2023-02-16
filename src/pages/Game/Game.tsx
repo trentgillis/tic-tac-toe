@@ -29,8 +29,8 @@ export function Game() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    setIsOpen(gameEngine?.winner !== null);
-  }, [gameEngine?.winner]);
+    setIsOpen(gameEngine?.roundCompleted || false);
+  }, [gameEngine?.roundCompleted]);
 
   return (
     <>
