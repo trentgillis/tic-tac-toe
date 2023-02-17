@@ -27,9 +27,16 @@ const LogoWrapper = styled.span`
 
 const ButtonWrapper = styled.span`
   grid-area: reset;
-  width: 100%;
   display: flex;
   justify-content: right;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 40px;
+  }
 
   @media only screen and (min-width: 768px) {
     button {
@@ -37,6 +44,16 @@ const ButtonWrapper = styled.span`
       height: 52px;
       width: 52px;
     }
+  }
+`;
+
+const RestartIconWrapper = styled.div`
+  width: 16px;
+  height: 16px;
+
+  @media only screen and (min-width: 768px) {
+    width: 20px;
+    height: 20px;
   }
 `;
 
@@ -54,7 +71,9 @@ export function GameBoardHeader() {
         <TurnDisplay />
         <ButtonWrapper>
           <Button variant="secondary" color="silver" onClick={show}>
-            <img src={restartIcon} alt="restart button icon" />
+            <RestartIconWrapper>
+              <img src={restartIcon} alt="restart button icon" />
+            </RestartIconWrapper>
           </Button>
         </ButtonWrapper>
       </Layout>
