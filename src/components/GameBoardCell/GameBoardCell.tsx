@@ -24,6 +24,7 @@ const Layout = styled.div`
   align-items: center;
   justify-content: center;
   aspect-ratio: 1 / 1;
+  transition: all 0s;
 
   &:hover:not(.not-clickable) {
     cursor: pointer;
@@ -32,6 +33,7 @@ const Layout = styled.div`
   &.winning-position-x {
     background-color: var(--color-blue);
     box-shadow: inset 0px -4px 0px #118c87;
+    transition: all 0.2s ease-in-out;
 
     @media only screen and (min-width: 768px) {
       box-shadow: inset 0px -8px 0px #118c87;
@@ -41,6 +43,7 @@ const Layout = styled.div`
   &.winning-position-o {
     background-color: var(--color-yellow);
     box-shadow: inset 0px -4px 0px #cc8b13;
+    transition: all 0.2s ease-in-out;
 
     @media screen and (min-width: 768px) {
       box-shadow: inset 0px -8px 0px #cc8b13;

@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 
 import restartIcon from '@/assets/icon-restart.svg';
-import { BodyText, Button, H2, Logo, TurnDisplay } from '@/components';
-import { useGameEngine } from '@/lib/hooks/useGameEngine';
-import { useModal } from '@/lib/hooks/useModal';
+import { Button, Logo, TurnDisplay } from '@/components';
 import { useState } from 'react';
 import { RestartModal } from '../RestartModal/RestartModal';
 
