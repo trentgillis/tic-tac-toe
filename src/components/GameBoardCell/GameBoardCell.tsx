@@ -33,7 +33,7 @@ const Layout = styled.div`
   &.winning-position-x {
     background-color: var(--color-blue);
     box-shadow: inset 0px -4px 0px #118c87;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.3s ease-in-out;
 
     @media only screen and (min-width: 768px) {
       box-shadow: inset 0px -8px 0px #118c87;

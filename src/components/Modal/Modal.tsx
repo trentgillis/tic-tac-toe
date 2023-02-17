@@ -2,13 +2,14 @@ import '@reach/dialog/styles.css';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { DialogContent, DialogOverlay } from '@reach/dialog';
+import { animated, config, useTransition } from '@react-spring/web';
 
 type ModalProps = {
   isOpen: boolean;
   children: React.ReactNode;
 };
 
-const StyledDialogOverlay = styled(DialogOverlay)`
+const StyledDialogOverlay = styled(animated(DialogOverlay))`
   background-color: hsla(0, 0%, 0%, 0.5);
   margin: 0;
   height: 100%;
@@ -30,9 +31,19 @@ const StyledDialogContent = styled(DialogContent)`
 `;
 
 export const Modal = memo(({ isOpen, children }: ModalProps) => {
-  return (
-    <StyledDialogOverlay isOpen={isOpen}>
-      <StyledDialogContent>{children}</StyledDialogContent>
-    </StyledDialogOverlay>
+  const transitions = useTransition(isOpen, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: config.gentle,
+  });
+
+  return transitions(
+    (style, item) =>
+      item && (
+        <StyledDialogOverlay isOpen={isOpen} style={{ opacity: style.opacity }}>
+          <StyledDialogContent>{children}</StyledDialogContent>
+        </StyledDialogOverlay>
+      )
   );
 });
