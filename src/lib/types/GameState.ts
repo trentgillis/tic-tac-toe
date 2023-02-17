@@ -8,6 +8,7 @@ export type GameState = {
   gameType: 'ai' | 'pvp' | null;
   currentPlayer: HumanPlayer | AIPlayer | null;
   winner: HumanPlayer | AIPlayer | null;
+  winningPositions: number[][] | null;
   playerX: HumanPlayer | AIPlayer | null;
   playerO: HumanPlayer | AIPlayer | null;
   draws: number;

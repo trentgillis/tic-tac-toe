@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 import xMarkImg from '@/assets/icon-x.svg';
+import xMarkImgDark from '@/assets/icon-x-dark-navy.svg';
 import oMarkImg from '@/assets/icon-o.svg';
+import oMarkImgDark from '@/assets/icon-o-dark-navy.svg';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 import { AIPlayer } from '@/lib/utils/AIPlayer';
 
@@ -25,6 +27,24 @@ const Layout = styled.div`
 
   &:hover:not(.not-clickable) {
     cursor: pointer;
+  }
+
+  &.winning-position-x {
+    background-color: var(--color-blue);
+    box-shadow: inset 0px -4px 0px #118c87;
+
+    @media only screen and (min-width: 768px) {
+      box-shadow: inset 0px -8px 0px #118c87;
+    }
+  }
+
+  &.winning-position-o {
+    background-color: var(--color-yellow);
+    box-shadow: inset 0px -4px 0px #cc8b13;
+
+    @media screen and (min-width: 768px) {
+      box-shadow: inset 0px -8px 0px #cc8b13;
+    }
   }
 
   @media only screen and (min-width: 768px) {
@@ -61,6 +81,10 @@ const IconWrapper = styled.div`
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
   const gameEngine = useGameEngine();
 
+  const isWinningPosition =
+    gameEngine?.winningPositions?.some(([winRow, winCol]) => winRow === row && winCol === col) ||
+    false;
+
   const handleCellClick = () => {
     if (gameEngine?.boardCells[row][col]) return;
     if (gameEngine?.currentPlayer instanceof AIPlayer) return;
@@ -77,12 +101,16 @@ export function GameBoardCell({ row, col }: GameBoardCellProps) {
             ? 'not-clickable'
             : ''
         }
+        ${isWinningPosition ? `winning-position-${gameEngine?.winner?.token}` : ''}
       `}
       onClick={() => handleCellClick()}
     >
       <IconWrapper>
-        {gameEngine?.boardCells[row][col] && (
+        {gameEngine?.boardCells[row][col] && !isWinningPosition && (
           <img src={gameEngine?.boardCells[row][col] === 'x' ? xMarkImg : oMarkImg} />
+        )}
+        {isWinningPosition && (
+          <img src={gameEngine?.winner?.token === 'x' ? xMarkImgDark : oMarkImgDark} />
         )}
       </IconWrapper>
     </Layout>

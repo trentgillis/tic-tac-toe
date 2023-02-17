@@ -7,6 +7,7 @@ export const initialGameState: GameState = {
   roundCompleted: false,
   currentPlayer: null,
   winner: null,
+  winningPositions: null,
   draws: 0,
   playerX: null,
   playerO: null,

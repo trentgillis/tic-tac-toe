@@ -63,6 +63,10 @@ export class GameEngine {
     return this.gameState.roundCompleted;
   }
 
+  get winningPositions() {
+    return this.gameState.winningPositions;
+  }
+
   updateGameState() {
     this.setGameState(this.gameState);
   }
@@ -126,6 +130,7 @@ export class GameEngine {
       ...this.gameState,
       roundCompleted: false,
       winner: null,
+      winningPositions: null,
       currentPlayer: this.gameState.playerX,
       board: new Board(),
     };
@@ -141,7 +146,8 @@ export class GameEngine {
     let roundCompleted = false;
 
     this.board.placeMark(row, col, this.currentPlayer);
-    if (this.board.hasWin(row, col, this.currentPlayer)) {
+    const winningPositions = this.board.winningPositions(row, col, this.currentPlayer);
+    if (winningPositions) {
       roundCompleted = true;
       winningPlayer = this.currentPlayer;
       this.updateScore(this.currentPlayer.token);
@@ -154,6 +160,7 @@ export class GameEngine {
       ...this.gameState,
       roundCompleted,
       winner: winningPlayer,
+      winningPositions,
       currentPlayer:
         this.currentPlayer.token === 'x' ? this.gameState.playerO : this.gameState.playerX,
     };

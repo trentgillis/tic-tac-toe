@@ -16,25 +16,38 @@ export class Board {
     this.board[row][col] = player.token;
   }
 
-  hasWin(row: number, col: number, player: HumanPlayer | AIPlayer): boolean {
-    return (
-      this.hasHorizontalWin(row, player) ||
-      this.hasVerticalWin(col, player) ||
-      this.hasDiagonalWin(player)
-    );
+  winningPositions(row: number, col: number, player: HumanPlayer | AIPlayer): number[][] | null {
+    const winningPositions = [
+      ...this.horizontalWin(row, player),
+      ...this.verticalWin(col, player),
+      ...this.diagonalWin(player),
+    ];
+
+    if (winningPositions.length > 0) return winningPositions;
+    else return null;
   }
 
-  hasHorizontalWin(row: number, player: HumanPlayer | AIPlayer): boolean {
-    return this.board[row].every((value) => value === player.token);
+  horizontalWin(row: number, player: HumanPlayer | AIPlayer): number[][] {
+    if (this.board[row].every((value) => value === player.token)) {
+      return this.board[row].map((_, col) => [row, col]);
+    }
+
+    return [];
   }
 
-  hasVerticalWin(col: number, player: HumanPlayer | AIPlayer): boolean {
-    return this.board
+  verticalWin(col: number, player: HumanPlayer | AIPlayer): number[][] {
+    const isVerticalWin = this.board
       .reduce((acc, _, row) => [...acc, this.board[row][col]], [] as (ValidTokens | null)[])
       .every((colToken) => player.token === colToken);
+
+    if (isVerticalWin) {
+      return this.board.reduce((acc, _, row) => [...acc, [row, col]], [] as number[][]);
+    }
+
+    return [];
   }
 
-  hasDiagonalWin(player: HumanPlayer | AIPlayer): boolean {
+  diagonalWin(player: HumanPlayer | AIPlayer): number[][] {
     const diagonals = [
       [
         [0, 0],
@@ -55,11 +68,11 @@ export class Board {
       );
 
       if (diagonalValues.every((diagonalValue) => player.token === diagonalValue)) {
-        return true;
+        return diagonal;
       }
     }
 
-    return false;
+    return [];
   }
 
   isBoardFull(): boolean {
