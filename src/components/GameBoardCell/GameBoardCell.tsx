@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { animated, config, useSpring } from '@react-spring/web';
 
 import xMarkImg from '@/assets/icon-x.svg';
 import xMarkImgDark from '@/assets/icon-x-dark-navy.svg';
@@ -73,16 +74,22 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 
   @media only screen and (min-width: 768px) {
     width: 64px;
     height: 64px;
+    margin-bottom: 8px;
   }
 `;
 
 export function GameBoardCell({ row, col }: GameBoardCellProps) {
   const gameEngine = useGameEngine();
+  const animatedImgStyles = useSpring({
+    from: { opacity: 0 },
+    to: { opacity: 1 },
+    config: config.gentle,
+  });
 
   const isWinningPosition =
     gameEngine?.winningPositions?.some(([winRow, winCol]) => winRow === row && winCol === col) ||
@@ -113,7 +120,10 @@ export function GameBoardCell({ row, col }: GameBoardCellProps) {
           <img src={gameEngine?.boardCells[row][col] === 'x' ? xMarkImg : oMarkImg} />
         )}
         {isWinningPosition && (
-          <img src={gameEngine?.winner?.token === 'x' ? xMarkImgDark : oMarkImgDark} />
+          <animated.img
+            style={animatedImgStyles}
+            src={gameEngine?.winner?.token === 'x' ? xMarkImgDark : oMarkImgDark}
+          />
         )}
       </IconWrapper>
     </Layout>
