@@ -12,8 +12,10 @@ export class AIPlayer extends Player {
     return 'on no, you lost...';
   }
 
-  getBestMove() {
+  getBestMove(): [number, number] {
     // TODO: NOOP
+
+    return [0, 0];
   }
 
   minimax() {
