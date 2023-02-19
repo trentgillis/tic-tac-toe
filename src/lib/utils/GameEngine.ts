@@ -142,14 +142,17 @@ export class GameEngine {
       throw new Error('Game is in invalid state. Cannot perform player move.');
     }
 
+    let winningPositions: number[][] = [];
     let winningPlayer = null;
     let roundCompleted = false;
 
     this.board.placeMark(row, col, this.currentPlayer);
-    const winningPositions = this.board.winningPositions(row, col, this.currentPlayer);
-    if (winningPositions) {
+
+    if (this.board.hasWin(row, col, this.currentPlayer)) {
       roundCompleted = true;
       winningPlayer = this.currentPlayer;
+      winningPositions = this.board.winningPositions;
+
       this.updateScore(this.currentPlayer.token);
     } else if (this.board.isBoardFull()) {
       roundCompleted = true;
