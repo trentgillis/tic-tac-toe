@@ -4,7 +4,9 @@ import { AIPlayer } from '@/lib/utils/AIPlayer';
 import { HumanPlayer } from '@/lib/utils/HumanPlayer';
 
 export class Board {
-  board: GameBoard;
+  board: GameBoard = Array(3)
+    .fill(null)
+    .map(() => [null, null, null]);
 
   private _winningPositions: number[][] = [];
   private _diagonalPositions = [
@@ -20,10 +22,10 @@ export class Board {
     ],
   ];
 
-  constructor() {
-    this.board = Array(3)
-      .fill(null)
-      .map(() => [null, null, null]);
+  constructor(boardCells?: GameBoard) {
+    if (boardCells) {
+      this.board = JSON.parse(JSON.stringify(boardCells));
+    }
   }
 
   get winningPositions() {

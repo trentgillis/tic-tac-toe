@@ -147,7 +147,6 @@ export class GameEngine {
     let roundCompleted = false;
 
     this.board.placeMark(row, col, this.currentPlayer);
-
     if (this.board.hasWin(row, col, this.currentPlayer)) {
       roundCompleted = true;
       winningPlayer = this.currentPlayer;

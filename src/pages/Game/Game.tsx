@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { GameBoard, GameBoardHeader, ScoreDisplays, WinnerModal } from '@/components';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 import { AIPlayer } from '@/lib/utils/AIPlayer';
+import { Board } from '@/lib/utils/Board';
 
 const Layout = styled.section`
   height: fit-content;
@@ -34,9 +35,17 @@ export function Game() {
   }, [gameEngine?.roundCompleted]);
 
   useEffect(() => {
-    if (gameEngine?.currentPlayer instanceof AIPlayer) {
-      const [aiRow, aiCol] = gameEngine.currentPlayer.getBestMove();
-      gameEngine.playerTurn(aiRow, aiCol);
+    if (
+      gameEngine?.currentPlayer instanceof AIPlayer &&
+      gameEngine.board.winningPositions.length === 0
+    ) {
+      const [aiRow, aiCol] = gameEngine.currentPlayer.getBestMove(
+        new Board(gameEngine.board.board)
+      );
+
+      setTimeout(() => {
+        gameEngine.playerTurn(aiRow, aiCol);
+      }, 1000);
     }
   }, [gameEngine?.currentPlayer]);
 
