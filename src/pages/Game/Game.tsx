@@ -37,15 +37,17 @@ export function Game() {
   useEffect(() => {
     if (
       gameEngine?.currentPlayer instanceof AIPlayer &&
-      gameEngine.board.winningPositions.length === 0
+      !gameEngine.board.hasWin &&
+      !gameEngine.board.hasDraw
     ) {
+      const opponentToken = gameEngine.currentPlayer.token === 'x' ? 'o' : 'x';
+
       const [aiRow, aiCol] = gameEngine.currentPlayer.getBestMove(
-        new Board(gameEngine.board.board)
+        new Board(gameEngine.boardCells, true),
+        opponentToken
       );
 
-      setTimeout(() => {
-        gameEngine.playerTurn(aiRow, aiCol);
-      }, 1000);
+      gameEngine.playerTurn(aiRow, aiCol);
     }
   }, [gameEngine?.currentPlayer]);
 

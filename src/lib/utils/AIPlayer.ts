@@ -1,4 +1,3 @@
-import { GameBoard } from '@/lib/types/GameBoard';
 import { ValidTokens } from '@/lib/types/ValidTokens';
 import { Board } from '@/lib/utils/Board';
 import { Player } from '@/lib/utils/Player';
@@ -14,15 +13,20 @@ export class AIPlayer extends Player {
     return 'on no, you lost...';
   }
 
-  getBestMove(board: Board): [number, number] {
-    let bestMove: [number, number] = [-Infinity, -Infinity];
+  getBestMove(board: Board, opponentToken: ValidTokens): [number, number] {
+    let bestMove: [number, number] = [-1, -1];
     let bestScore = -Infinity;
+
+    if (board.board.flat().every((val) => val === null)) {
+      return [0, 0];
+    }
 
     for (const [row, rowValues] of board.board.entries()) {
       for (const [col] of rowValues.entries()) {
         if (board.board[row][col] === null) {
-          board.placeMark(row, col, this);
-          const currPositionScore = this.minimax(board.board);
+          board.placeToken(row, col, this.token);
+          const currPositionScore = this.minimax(board, opponentToken, false);
+          board.removeToken(row, col);
 
           if (currPositionScore > bestScore) {
             bestScore = currPositionScore;
@@ -35,12 +39,43 @@ export class AIPlayer extends Player {
     return bestMove;
   }
 
-  minimax(boardCells: GameBoard): number {
-    // TODO: NOOP
-    return 1;
-  }
+  minimax(board: Board, opponentToken: ValidTokens, isMaximizing: boolean): number {
+    if (board.hasDraw) return 0;
+    else if (board.hasWin && board.winningToken === this.token) return 1;
+    else if (board.hasWin && board.winningToken !== this.token) return -1;
 
-  evaluate() {
-    // TODO: NOOP
+    if (isMaximizing) {
+      let maxScore = -Infinity;
+
+      for (const [row, rowVal] of board.board.entries()) {
+        for (const [col] of rowVal.entries()) {
+          if (board.board[row][col] === null) {
+            board.placeToken(row, col, this.token);
+            const currPositionScore = this.minimax(board, opponentToken, false);
+            board.removeToken(row, col);
+
+            maxScore = Math.max(maxScore, currPositionScore);
+          }
+        }
+      }
+
+      return maxScore;
+    } else {
+      let minScore = Infinity;
+
+      for (const [row, rowVal] of board.board.entries()) {
+        for (const [col] of rowVal.entries()) {
+          if (board.board[row][col] === null) {
+            board.placeToken(row, col, opponentToken);
+            const currPositionScore = this.minimax(board, opponentToken, true);
+            board.removeToken(row, col);
+
+            minScore = Math.min(minScore, currPositionScore);
+          }
+        }
+      }
+
+      return minScore;
+    }
   }
 }

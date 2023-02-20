@@ -146,14 +146,14 @@ export class GameEngine {
     let winningPlayer = null;
     let roundCompleted = false;
 
-    this.board.placeMark(row, col, this.currentPlayer);
-    if (this.board.hasWin(row, col, this.currentPlayer)) {
+    this.board.placeToken(row, col, this.currentPlayer.token);
+    if (this.board.hasWin) {
       roundCompleted = true;
       winningPlayer = this.currentPlayer;
       winningPositions = this.board.winningPositions;
 
       this.updateScore(this.currentPlayer.token);
-    } else if (this.board.isBoardFull()) {
+    } else if (this.board.hasDraw) {
       roundCompleted = true;
       this.updateScore('d');
     }
