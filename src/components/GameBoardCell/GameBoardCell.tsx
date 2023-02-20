@@ -3,8 +3,10 @@ import { animated, config, useSpring } from '@react-spring/web';
 
 import xMarkImg from '@/assets/icon-x.svg';
 import xMarkImgDark from '@/assets/icon-x-dark-navy.svg';
+import xMarkOutline from '@/assets/icon-x-outline.svg';
 import oMarkImg from '@/assets/icon-o.svg';
 import oMarkImgDark from '@/assets/icon-o-dark-navy.svg';
+import oMarkOutline from '@/assets/icon-o-outline.svg';
 import { useGameEngine } from '@/lib/hooks/useGameEngine';
 import { AIPlayer } from '@/lib/utils/AIPlayer';
 
@@ -13,7 +15,7 @@ type GameBoardCellProps = {
   col: number;
 };
 
-const Layout = styled.div`
+const Layout = styled.div<{ xOutlinePath: string; oOutlinePath: string }>`
   width: auto;
   height: auto;
   max-width: 100%;
@@ -53,12 +55,12 @@ const Layout = styled.div`
 
   @media only screen and (min-width: 768px) {
     &.current-player-x:hover:not(.not-clickable) > * {
-      background: url('/src/assets/icon-x-outline.svg') no-repeat center;
+      background: url(${({ xOutlinePath }) => xOutlinePath}) no-repeat center;
       background-size: contain;
     }
 
     &.current-player-o:hover:not(.not-clickable) > div {
-      background: url('/src/assets/icon-o-outline.svg') no-repeat center;
+      background: url(${({ oOutlinePath }) => oOutlinePath}) no-repeat center;
       background-size: contain;
     }
 
@@ -104,6 +106,8 @@ export function GameBoardCell({ row, col }: GameBoardCellProps) {
 
   return (
     <Layout
+      xOutlinePath={xMarkOutline}
+      oOutlinePath={oMarkOutline}
       className={`
         ${`current-player-${gameEngine?.currentPlayer.token}`}
         ${
