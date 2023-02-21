@@ -67,10 +67,6 @@ export class GameEngine {
     return this.gameState.winningPositions;
   }
 
-  updateGameState() {
-    this.setGameState(this.gameState);
-  }
-
   startHumanGame(selectedToken: ValidTokens) {
     let playerX;
     let playerO;
@@ -82,7 +78,7 @@ export class GameEngine {
       playerO = new HumanPlayer('o', 0, 'Player 1', 'P1');
     }
 
-    this.setGameState({
+    this.updateGameState({
       ...this.gameState,
       gameType: 'pvp',
       inProgress: true,
@@ -105,7 +101,7 @@ export class GameEngine {
       playerO = new HumanPlayer('o', 0, 'Player 1', 'You', 'You win!');
     }
 
-    this.setGameState({
+    this.updateGameState({
       ...this.gameState,
       gameType: 'ai',
       inProgress: true,
@@ -118,23 +114,21 @@ export class GameEngine {
   }
 
   restartGame() {
-    this.gameState = {
+    this.updateGameState({
       ...initialGameState,
       board: new Board(),
-    };
-    this.setGameState(this.gameState);
+    });
   }
 
   nextRound() {
-    this.gameState = {
+    this.updateGameState({
       ...this.gameState,
       roundCompleted: false,
       winner: null,
       winningPositions: null,
       currentPlayer: this.gameState.playerX,
       board: new Board(),
-    };
-    this.setGameState(this.gameState);
+    });
   }
 
   playerTurn(row: number, col: number) {
@@ -158,15 +152,20 @@ export class GameEngine {
       this.updateScore('d');
     }
 
-    this.gameState = {
+    this.updateGameState({
       ...this.gameState,
       roundCompleted,
       winner: winningPlayer,
       winningPositions,
       currentPlayer:
         this.currentPlayer.token === 'x' ? this.gameState.playerO : this.gameState.playerX,
-    };
-    this.updateGameState();
+    });
+  }
+
+  private updateGameState(gameState: GameState) {
+    this.setGameState({
+      ...gameState,
+    });
   }
 
   private updateScore(winner: PlayerWinPossibilities) {
@@ -182,6 +181,8 @@ export class GameEngine {
       this.gameState.draws += 1;
     }
 
-    this.updateGameState();
+    this.updateGameState({
+      ...this.gameState,
+    });
   }
 }
