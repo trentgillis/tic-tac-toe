@@ -15,13 +15,13 @@ export class AIPlayer extends Player {
     let bestMove: [number, number] = [-1, -1];
     let bestScore = -Infinity;
 
-    if (board.board.flat().every((val) => val === null)) {
+    if (board.boardCells.flat().every((val) => val === null)) {
       return [0, 0];
     }
 
-    for (const [row, rowValues] of board.board.entries()) {
+    for (const [row, rowValues] of board.boardCells.entries()) {
       for (const [col] of rowValues.entries()) {
-        if (board.board[row][col] === null) {
+        if (board.boardCells[row][col] === null) {
           board.placeToken(row, col, this.token);
           const currPositionScore = this.minimax(board, opponentToken, false);
           board.removeToken(row, col);
@@ -45,9 +45,9 @@ export class AIPlayer extends Player {
     if (isMaximizing) {
       let maxScore = -Infinity;
 
-      for (const [row, rowVal] of board.board.entries()) {
+      for (const [row, rowVal] of board.boardCells.entries()) {
         for (const [col] of rowVal.entries()) {
-          if (board.board[row][col] === null) {
+          if (board.boardCells[row][col] === null) {
             board.placeToken(row, col, this.token);
             const currPositionScore = this.minimax(board, opponentToken, false);
             board.removeToken(row, col);
@@ -61,9 +61,9 @@ export class AIPlayer extends Player {
     } else {
       let minScore = Infinity;
 
-      for (const [row, rowVal] of board.board.entries()) {
+      for (const [row, rowVal] of board.boardCells.entries()) {
         for (const [col] of rowVal.entries()) {
-          if (board.board[row][col] === null) {
+          if (board.boardCells[row][col] === null) {
             board.placeToken(row, col, opponentToken);
             const currPositionScore = this.minimax(board, opponentToken, true);
             board.removeToken(row, col);

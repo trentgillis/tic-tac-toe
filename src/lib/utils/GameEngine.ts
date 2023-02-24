@@ -41,7 +41,7 @@ export class GameEngine {
   }
 
   get boardCells() {
-    return this._gameState.board.board;
+    return this._gameState.board.boardCells;
   }
 
   get playerScores() {
@@ -204,7 +204,7 @@ export class GameEngine {
       ...previousGameState,
       playerX,
       playerO,
-      board: new Board(previousGameState.board.board),
+      board: new Board(previousGameState.board.boardCells),
     };
   }
 
@@ -228,7 +228,7 @@ export class GameEngine {
       ...previousGameState,
       playerX,
       playerO,
-      board: new Board(previousGameState.board.board),
+      board: new Board(previousGameState.board.boardCells),
     };
   }
 

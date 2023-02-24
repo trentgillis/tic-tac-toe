@@ -2,7 +2,7 @@ import { GameBoard } from '@/lib/types/GameBoard';
 import { ValidTokens } from '@/lib/types/ValidTokens';
 
 export class Board {
-  board: GameBoard = Array(3)
+  boardCells: GameBoard = Array(3)
     .fill(null)
     .map(() => [null, null, null]);
 
@@ -26,7 +26,7 @@ export class Board {
 
   constructor(boardCells?: GameBoard, allowRemovable?: boolean) {
     if (boardCells) {
-      this.board = JSON.parse(JSON.stringify(boardCells));
+      this.boardCells = JSON.parse(JSON.stringify(boardCells));
     }
 
     if (allowRemovable) {
@@ -51,7 +51,7 @@ export class Board {
   }
 
   placeToken(row: number, col: number, playerMark: ValidTokens): void {
-    this.board[row][col] = playerMark;
+    this.boardCells[row][col] = playerMark;
     this.determineWin(row, col, playerMark);
   }
 
@@ -60,7 +60,7 @@ export class Board {
       throw new Error('Removal of tokens is not allowed');
     }
 
-    this.board[row][col] = null;
+    this.boardCells[row][col] = null;
     this._hasWin = false;
     this._hasDraw = false;
   }
@@ -79,7 +79,7 @@ export class Board {
   }
 
   private isBoardFull(): boolean {
-    for (const row of this.board) {
+    for (const row of this.boardCells) {
       if (row.some((value) => value === null)) {
         return false;
       }
@@ -100,20 +100,20 @@ export class Board {
   }
 
   private getHorizontalWin(row: number, playerToken: ValidTokens): number[][] {
-    if (this.board[row].every((value) => value === playerToken)) {
-      return this.board[row].map((_, col) => [row, col]);
+    if (this.boardCells[row].every((value) => value === playerToken)) {
+      return this.boardCells[row].map((_, col) => [row, col]);
     }
 
     return [];
   }
 
   private getVerticalWin(col: number, playerToken: ValidTokens): number[][] {
-    const isVerticalWin = this.board
-      .reduce((acc, _, row) => [...acc, this.board[row][col]], [] as (ValidTokens | null)[])
+    const isVerticalWin = this.boardCells
+      .reduce((acc, _, row) => [...acc, this.boardCells[row][col]], [] as (ValidTokens | null)[])
       .every((colToken) => playerToken === colToken);
 
     if (isVerticalWin) {
-      return this.board.reduce((acc, _, row) => [...acc, [row, col]], [] as number[][]);
+      return this.boardCells.reduce((acc, _, row) => [...acc, [row, col]], [] as number[][]);
     }
 
     return [];
@@ -122,7 +122,7 @@ export class Board {
   private getDiagonalWin(playerToken: ValidTokens): number[][] {
     for (const diagonal of this._diagonalPositions) {
       const diagonalValues = diagonal.reduce(
-        (acc, currentDiagonal) => [...acc, this.board[currentDiagonal[0]][currentDiagonal[1]]],
+        (acc, currentDiagonal) => [...acc, this.boardCells[currentDiagonal[0]][currentDiagonal[1]]],
         [] as (ValidTokens | null)[]
       );
 
