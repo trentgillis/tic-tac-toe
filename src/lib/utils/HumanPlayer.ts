@@ -2,10 +2,6 @@ import { ValidTokens } from '../types/ValidTokens';
 import { Player } from './Player';
 
 export class HumanPlayer extends Player {
-  readonly winMessage: string;
-  readonly playerName: string;
-  readonly playerShortName: string;
-
   constructor(
     token: ValidTokens,
     score: number,
@@ -13,9 +9,8 @@ export class HumanPlayer extends Player {
     playerShortName: string,
     winMessage?: string
   ) {
-    super(token, score);
-    this.playerName = playerName;
-    this.winMessage = winMessage || `${playerName} wins!`;
-    this.playerShortName = playerShortName;
+    winMessage = winMessage || `${playerName} wins!`;
+
+    super(token, score, playerName, playerShortName, winMessage);
   }
 }

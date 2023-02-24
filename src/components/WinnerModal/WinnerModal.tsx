@@ -70,9 +70,7 @@ export function WinnerModal({ isOpen }: WinnerModalProps) {
   return (
     <Modal isOpen={isOpen}>
       <ModalContentWrapper>
-        {gameEngine?.winner && (
-          <BodyText color="silver">{gameEngine?.winner?.getWinMessage()}</BodyText>
-        )}
+        {gameEngine?.winner && <BodyText color="silver">{gameEngine?.winner?.winMessage}</BodyText>}
         <MarkTextWrapper>
           {gameEngine?.winner ? (
             <>

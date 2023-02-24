@@ -244,9 +244,9 @@ export class GameEngine {
     }
 
     if (winner === 'x') {
-      this._gameState.playerX.score += 1;
+      this._gameState.playerX.updateScore();
     } else if (winner === 'o') {
-      this._gameState.playerO.score += 1;
+      this._gameState.playerO.updateScore();
     } else if (winner === 'd') {
       this._gameState.draws += 1;
     }

@@ -3,12 +3,12 @@ import { Board } from '@/lib/utils/Board';
 import { Player } from '@/lib/utils/Player';
 
 export class AIPlayer extends Player {
-  readonly playerShortName: string = 'AI';
-  readonly playerName: string = 'AI';
-  readonly winMessage = 'oh no, you lost...';
-
   constructor(token: ValidTokens, score: number = 0) {
-    super(token, score);
+    const playerName = 'AI';
+    const playerShortName = 'AI';
+    const winMessage = 'oh no, you lost...';
+
+    super(token, score, playerName, playerShortName, winMessage);
   }
 
   getBestMove(board: Board, opponentToken: ValidTokens): [number, number] {
