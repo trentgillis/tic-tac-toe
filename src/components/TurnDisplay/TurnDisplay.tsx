@@ -36,7 +36,7 @@ export function TurnDisplay() {
     <Layout>
       <ImgContainer>
         <img
-          src={gameEngine?.currentPlayer.token === 'x' ? xIcon : oIcon}
+          src={gameEngine?.currentPlayer?.token === 'x' ? xIcon : oIcon}
           alt="current player icon"
         />
       </ImgContainer>

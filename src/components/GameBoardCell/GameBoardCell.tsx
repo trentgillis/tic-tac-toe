@@ -109,7 +109,7 @@ export function GameBoardCell({ row, col }: GameBoardCellProps) {
       xOutlinePath={xMarkOutline}
       oOutlinePath={oMarkOutline}
       className={`
-        ${`current-player-${gameEngine?.currentPlayer.token}`}
+        ${`current-player-${gameEngine?.currentPlayer?.token}`}
         ${
           gameEngine?.boardCells[row][col] || gameEngine?.currentPlayer instanceof AIPlayer
             ? 'not-clickable'

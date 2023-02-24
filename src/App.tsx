@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Home, Game } from '@/pages';
 import { GameEngineProvider } from '@/lib/context/gameEngineContext';
 import { useGame } from '@/lib/hooks/useGame';
+import { GAME_DATA_LOCAL_STORAGE_KEY } from './lib/utils/GameEngine';
 
 const Layout = styled.main`
   width: 100%;
@@ -27,6 +29,10 @@ const Layout = styled.main`
 
 export function App() {
   const { gameEngine } = useGame();
+
+  useEffect(() => {
+    localStorage.setItem(GAME_DATA_LOCAL_STORAGE_KEY, JSON.stringify(gameEngine.gameState));
+  }, [gameEngine.gameState]);
 
   return (
     <Layout>

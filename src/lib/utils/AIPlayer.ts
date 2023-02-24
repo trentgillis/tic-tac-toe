@@ -4,13 +4,11 @@ import { Player } from '@/lib/utils/Player';
 
 export class AIPlayer extends Player {
   readonly playerShortName: string = 'AI';
+  readonly playerName: string = 'AI';
+  readonly winMessage = 'oh no, you lost...';
 
   constructor(token: ValidTokens, score: number = 0) {
     super(token, score);
-  }
-
-  getWinMessage(): string {
-    return 'on no, you lost...';
   }
 
   getBestMove(board: Board, opponentToken: ValidTokens): [number, number] {

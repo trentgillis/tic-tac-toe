@@ -6,65 +6,78 @@ import { AIPlayer } from '@/lib/utils/AIPlayer';
 import { Board } from '@/lib/utils/Board';
 import { initialGameState } from '@/lib/utils/initialGameState';
 
+export const GAME_DATA_LOCAL_STORAGE_KEY = 'game-data';
+
 export class GameEngine {
-  private gameState: GameState;
+  private _gameState: GameState;
   private setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 
-  constructor(gameState: GameState, setGameState: React.Dispatch<React.SetStateAction<GameState>>) {
+  constructor(
+    _gameState: GameState,
+    setGameState: React.Dispatch<React.SetStateAction<GameState>>
+  ) {
     this.setGameState = setGameState;
-    this.gameState = gameState;
+    this._gameState = _gameState;
   }
 
   get winner() {
-    return this.gameState.winner;
+    return this._gameState.winner;
   }
 
   get currentPlayer() {
-    if (!this.gameState.currentPlayer) {
-      throw new Error('GameState Error: Current player is undefined.');
-    }
-
-    return this.gameState.currentPlayer;
+    return this._gameState.currentPlayer;
   }
 
   get gameType() {
-    return this.gameState.gameType;
+    return this._gameState.gameType;
   }
 
   get gameInProgress() {
-    return this.gameState.inProgress;
+    return this._gameState.inProgress;
   }
 
   get board() {
-    return this.gameState.board;
+    return this._gameState.board;
   }
 
   get boardCells() {
-    return this.gameState.board.board;
+    return this._gameState.board.board;
   }
 
   get playerScores() {
     return {
-      x: this.gameState.playerX?.score,
-      o: this.gameState.playerO?.score,
-      d: this.gameState.draws,
+      x: this._gameState.playerX?.score,
+      o: this._gameState.playerO?.score,
+      d: this._gameState.draws,
     };
   }
 
   get playerX() {
-    return this.gameState.playerX;
+    return this._gameState.playerX;
   }
 
   get playerO() {
-    return this.gameState.playerO;
+    return this._gameState.playerO;
   }
 
   get roundCompleted() {
-    return this.gameState.roundCompleted;
+    return this._gameState.roundCompleted;
   }
 
   get winningPositions() {
-    return this.gameState.winningPositions;
+    return this._gameState.winningPositions;
+  }
+
+  get gameState() {
+    return this._gameState;
+  }
+
+  static loadPreviousGame(previousGameState: GameState): GameState {
+    if (previousGameState.gameType === 'ai') {
+      return this.loadPreviousAIGame(previousGameState);
+    } else {
+      return this.loadPreviousPlayerGame(previousGameState);
+    }
   }
 
   startHumanGame(selectedToken: ValidTokens) {
@@ -79,7 +92,7 @@ export class GameEngine {
     }
 
     this.updateGameState({
-      ...this.gameState,
+      ...this._gameState,
       gameType: 'pvp',
       inProgress: true,
       currentPlayer: playerX,
@@ -102,7 +115,7 @@ export class GameEngine {
     }
 
     this.updateGameState({
-      ...this.gameState,
+      ...this._gameState,
       gameType: 'ai',
       inProgress: true,
       currentPlayer: playerX,
@@ -114,6 +127,8 @@ export class GameEngine {
   }
 
   restartGame() {
+    localStorage.removeItem(GAME_DATA_LOCAL_STORAGE_KEY);
+
     this.updateGameState({
       ...initialGameState,
       board: new Board(),
@@ -122,11 +137,11 @@ export class GameEngine {
 
   nextRound() {
     this.updateGameState({
-      ...this.gameState,
+      ...this._gameState,
       roundCompleted: false,
       winner: null,
       winningPositions: null,
-      currentPlayer: this.gameState.playerX,
+      currentPlayer: this._gameState.playerX,
       board: new Board(),
     });
   }
@@ -153,36 +168,91 @@ export class GameEngine {
     }
 
     this.updateGameState({
-      ...this.gameState,
+      ...this._gameState,
       roundCompleted,
       winner: winningPlayer,
       winningPositions,
       currentPlayer:
-        this.currentPlayer.token === 'x' ? this.gameState.playerO : this.gameState.playerX,
+        this.currentPlayer.token === 'x' ? this._gameState.playerO : this._gameState.playerX,
     });
   }
 
-  private updateGameState(gameState: GameState) {
+  private static loadPreviousAIGame(previousGameState: GameState): GameState {
+    let playerX: AIPlayer | HumanPlayer;
+    let playerO: AIPlayer | HumanPlayer;
+    if (previousGameState.playerX?.playerShortName === 'AI') {
+      playerX = new AIPlayer('x', previousGameState.playerX?.score);
+      playerO = new HumanPlayer(
+        'o',
+        previousGameState.playerO?.score || 0,
+        'Player 1',
+        'You',
+        'You win!'
+      );
+    } else {
+      playerX = new HumanPlayer(
+        'x',
+        previousGameState.playerX?.score || 0,
+        'Player 1',
+        'You',
+        'You win!'
+      );
+      playerO = new AIPlayer('o', previousGameState.playerO?.score);
+    }
+
+    return {
+      ...previousGameState,
+      playerX,
+      playerO,
+      board: new Board(previousGameState.board.board),
+    };
+  }
+
+  private static loadPreviousPlayerGame(previousGameState: GameState): GameState {
+    const playerX: HumanPlayer = new HumanPlayer(
+      'x',
+      previousGameState.playerX?.score || 0,
+      previousGameState.playerX?.playerName as string,
+      previousGameState.playerX?.playerShortName as string,
+      previousGameState.playerX?.winMessage as string
+    );
+    const playerO: HumanPlayer = new HumanPlayer(
+      'o',
+      previousGameState.playerO?.score || 0,
+      previousGameState.playerO?.playerName as string,
+      previousGameState.playerO?.playerShortName as string,
+      previousGameState.playerO?.winMessage as string
+    );
+
+    return {
+      ...previousGameState,
+      playerX,
+      playerO,
+      board: new Board(previousGameState.board.board),
+    };
+  }
+
+  private updateGameState(_gameState: GameState) {
     this.setGameState({
-      ...gameState,
+      ..._gameState,
     });
   }
 
   private updateScore(winner: PlayerWinPossibilities) {
-    if (!this.gameState.playerX || !this.gameState.playerO) {
+    if (!this._gameState.playerX || !this._gameState.playerO) {
       throw new Error('Game state is null, cannot perform method updateScore.');
     }
 
     if (winner === 'x') {
-      this.gameState.playerX.score += 1;
+      this._gameState.playerX.score += 1;
     } else if (winner === 'o') {
-      this.gameState.playerO.score += 1;
+      this._gameState.playerO.score += 1;
     } else if (winner === 'd') {
-      this.gameState.draws += 1;
+      this._gameState.draws += 1;
     }
 
     this.updateGameState({
-      ...this.gameState,
+      ...this._gameState,
     });
   }
 }
