@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { Home, Game } from '@/pages';
 import { GameEngineProvider } from '@/lib/context/gameEngineContext';
 import { useGame } from '@/lib/hooks/useGame';
-import { GAME_DATA_LOCAL_STORAGE_KEY } from './lib/utils/GameEngine';
+import { GAME_DATA_LOCAL_STORAGE_KEY } from '@/lib/utils/GameEngine';
 
 const Layout = styled.main`
   width: 100%;
